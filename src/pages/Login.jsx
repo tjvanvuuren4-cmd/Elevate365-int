@@ -9,13 +9,16 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
   e.preventDefault();
+  setLoading(true);
 
   const { data, error } = await login(email, password);
 
   if (error) {
+    setLoading(false);
     alert(error.message);
     return;
   }
@@ -25,6 +28,8 @@ export default function Login() {
     .select("role")
     .eq("id", data.user.id)
     .single();
+
+  setLoading(false);
 
   if (profile?.role === "admin") {
     navigate("/admin");
@@ -64,9 +69,12 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button className="w-full rounded-full bg-gradient-to-r from-purple-700 to-purple-500 py-4 font-bold uppercase tracking-widest shadow-[0_12px_35px_rgba(124,58,237,0.45)]">
-          Log In
-        </button>
+        <button
+  disabled={loading}
+  className="w-full rounded-full bg-gradient-to-r from-purple-700 to-purple-500 py-4 font-bold uppercase tracking-widest shadow-[0_12px_35px_rgba(124,58,237,0.45)] disabled:opacity-60 disabled:cursor-not-allowed"
+>
+  {loading ? "Signing In..." : "Log In"}
+</button>
 
         <p className="text-center text-gray-400 mt-6">
           No account?{" "}
