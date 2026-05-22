@@ -21,9 +21,15 @@ export default function AdminDashboard() {
     if (eftError) console.error("EFT error:", eftError.message);
 
     const { data: enrollmentData, error: enrollmentError } = await supabase
-      .from("enrollments")
-      .select("*")
-      .order("created_at", { ascending: false });
+  .from("enrollments")
+  .select(`
+    *,
+    profiles (
+      email,
+      full_name
+    )
+  `)
+  .order("created_at", { ascending: false });
 
     if (enrollmentError) console.error("Enrollment error:", enrollmentError.message);
 
@@ -177,10 +183,15 @@ export default function AdminDashboard() {
                 >
                   <div className="grid md:grid-cols-5 gap-4 items-center">
                     <div>
-                      <p className="text-gray-500 text-sm">Student ID</p>
-                      <p className="font-bold text-sm break-all">
-                        {enrollment.user_id}
-                      </p>
+                        <p className="text-gray-500 text-sm">Student</p>
+
+  <p className="font-bold text-sm break-all">
+    {enrollment.profiles?.full_name || "No Name"}
+  </p>
+
+  <p className="text-xs text-gray-400 break-all mt-1">
+    {enrollment.profiles?.email || "No Email"}
+  </p>
                     </div>
 
                     <div>
