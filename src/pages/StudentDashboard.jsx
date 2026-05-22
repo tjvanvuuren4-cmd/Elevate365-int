@@ -8,25 +8,49 @@ export default function StudentDashboard() {
 
   const [enrollments, setEnrollments] = useState([]);
 
+  const fetchEnrollments = async () => {
+    if (!user) return;
+
+    const { data, error } = await supabase
+      .from("enrollments")
+      .select("*")
+      .eq("user_id", user.id);
+
+    if (error) {
+      console.error("Enrollment error:", error.message);
+      return;
+    }
+
+    setEnrollments(data || []);
+  };
+
   useEffect(() => {
-    const fetchEnrollments = async () => {
-      if (!user) return;
-
-      const { data, error } = await supabase
-        .from("enrollments")
-        .select("*")
-        .eq("user_id", user.id);
-
-      if (error) {
-        console.error("Enrollment error:", error.message);
-        return;
-      }
-
-      setEnrollments(data || []);
-    };
-
     fetchEnrollments();
   }, [user]);
+
+  const createEnrollment = async (courseId) => {
+    if (!user) {
+      alert("Please log in first.");
+      return;
+    }
+
+    const { error } = await supabase.from("enrollments").insert({
+      user_id: user.id,
+      course_id: courseId,
+      status: "pending",
+      progress: 0,
+      certificate_issued: false,
+    });
+
+    if (error) {
+      console.error("Enrollment create error:", error.message);
+      alert(error.message);
+      return;
+    }
+
+    alert("Enrollment submitted. Waiting for admin approval.");
+    fetchEnrollments();
+  };
 
   const approvedCourses = enrollments.filter(
     (item) => item.status === "approved"
@@ -54,8 +78,7 @@ export default function StudentDashboard() {
               </h1>
 
               <p className="text-gray-400 mt-4 max-w-2xl">
-                Continue your learning journey, track your progress, and access
-                your enrolled Elevate•365 courses.
+                Choose a course, submit enrollment, and access your learning once approved.
               </p>
             </div>
 
@@ -70,16 +93,16 @@ export default function StudentDashboard() {
 
         <div className="grid md:grid-cols-3 gap-6 mt-10">
           <div className="rounded-3xl border border-purple-500/20 bg-black/50 p-6">
-            <p className="text-gray-500">My Courses</p>
+            <p className="text-gray-500">Approved Courses</p>
             <h2 className="text-4xl font-black text-purple-400 mt-2">
               {approvedCourses}
             </h2>
           </div>
 
           <div className="rounded-3xl border border-purple-500/20 bg-black/50 p-6">
-            <p className="text-gray-500">Progress</p>
+            <p className="text-gray-500">Enrollment Status</p>
             <h2 className="text-4xl font-black text-purple-400 mt-2">
-              {approvedCourses > 0 ? "Active" : "Active Member"}
+              {enrollments.length > 0 ? "Submitted" : "Choose Course"}
             </h2>
           </div>
 
@@ -93,26 +116,22 @@ export default function StudentDashboard() {
 
         <section className="mt-16">
           <h2 className="text-4xl font-black">
-            My <span className="text-purple-500">Courses</span>
+            Available <span className="text-purple-500">Courses</span>
           </h2>
 
           <p className="text-gray-400 mt-3">
-            Locked courses will unlock once payment has been approved.
+            Click Enroll Now to request access. Admin approval unlocks the course.
           </p>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
             {courses.map((course) => {
               const enrollment = enrollments.find(
-                (item) =>
-                  String(item.course_id) === String(course.id)
+                (item) => String(item.course_id) === String(course.id)
               );
 
-              const status = enrollment?.status || "locked";
-
+              const status = enrollment?.status || "not_enrolled";
               const isUnlocked = status === "approved";
-
               const progress = enrollment?.progress || 0;
-
               const priceZAR = course.priceUSD * USD_TO_ZAR;
 
               return (
@@ -121,7 +140,9 @@ export default function StudentDashboard() {
                   className={`rounded-[2rem] overflow-hidden border bg-black/60 ${
                     isUnlocked
                       ? "border-purple-500/30 shadow-[0_0_45px_rgba(124,58,237,0.2)]"
-                      : "border-white/10 opacity-70"
+                      : status === "not_enrolled"
+                      ? "border-green-500/20"
+                      : "border-white/10 opacity-80"
                   }`}
                 >
                   <div className="relative">
@@ -143,7 +164,7 @@ export default function StudentDashboard() {
                           ? "bg-blue-500/20 text-blue-300"
                           : status === "removed"
                           ? "bg-red-500/20 text-red-300"
-                          : "bg-gray-500/20 text-gray-300"
+                          : "bg-purple-500/20 text-purple-300"
                       }`}
                     >
                       {status === "approved"
@@ -154,7 +175,7 @@ export default function StudentDashboard() {
                         ? "Awaiting Docs"
                         : status === "removed"
                         ? "Removed"
-                        : "Locked"}
+                        : "Open"}
                     </span>
                   </div>
 
@@ -194,10 +215,25 @@ export default function StudentDashboard() {
                       </div>
 
                       <button
-                        disabled={!isUnlocked}
+                        onClick={() => {
+                          if (status === "not_enrolled") {
+                            createEnrollment(course.id);
+                          }
+
+                          if (status === "approved") {
+                            alert("Course access is approved.");
+                          }
+                        }}
+                        disabled={
+                          status === "pending" ||
+                          status === "awaiting_documents" ||
+                          status === "removed"
+                        }
                         className={`rounded-full px-5 py-3 text-xs font-black uppercase tracking-widest transition-all ${
-                          isUnlocked
+                          status === "approved"
                             ? "bg-purple-600 hover:bg-purple-500 text-white"
+                            : status === "not_enrolled"
+                            ? "bg-green-600 hover:bg-green-500 text-white"
                             : "bg-white/10 text-gray-500 cursor-not-allowed"
                         }`}
                       >
@@ -209,7 +245,7 @@ export default function StudentDashboard() {
                           ? "Documents Required"
                           : status === "removed"
                           ? "Access Removed"
-                          : "Locked"}
+                          : "Enroll Now"}
                       </button>
                     </div>
                   </div>
