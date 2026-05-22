@@ -1,0 +1,11 @@
+{
+  "name": "Elevate365",
+  "short_name": "Elevate365",
+  "description": "Elevate. Invest. Become.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#D4AF37",
+  "orientation": "portrait",
+  "icons": []
+}
