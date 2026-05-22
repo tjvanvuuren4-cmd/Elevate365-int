@@ -153,6 +153,13 @@ export default function FeaturedCourse() {
                   >
                     ≈ ${featured.priceUSD.toFixed(2)} USD
                   </div>
+
+                  <div
+  className="text-sm mt-3 font-semibold"
+  style={{ color: "#c084fc" }}
+>
+  or R {((featured.priceUSD * USD_TO_ZAR) / 10).toFixed(0)} / month × 10
+</div>
                 </div>
 
                 <div className="flex gap-3">
