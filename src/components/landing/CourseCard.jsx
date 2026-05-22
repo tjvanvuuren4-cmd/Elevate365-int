@@ -44,7 +44,7 @@ export default function CourseCard({ course, index }) {
         duration: 0.45,
         delay: index * 0.08,
       }}
-      className="group relative overflow-hidden rounded-[2rem]"
+      className="group relative overflow-hidden rounded-[2rem] transition-all duration-300 hover:-translate-y-2"
       style={{
         background: "rgba(255,255,255,0.035)",
         border: "1px solid rgba(255,255,255,0.1)",
@@ -67,7 +67,7 @@ export default function CourseCard({ course, index }) {
         <img
           src={course.image}
           alt={course.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
         />
 
         <div className="absolute inset-0 bg-gradient-to-t from-[#03030b] via-[#03030b]/25 to-transparent" />
