@@ -86,12 +86,6 @@ export default function AdminDashboard() {
             </h2>
           </div>
         </div>
-
-        <div className="mt-16 rounded-3xl border border-purple-500/20 bg-black/60 p-8">
-  <h2 className="text-3xl font-black mb-8">
-    Recent EFT Requests
-  </h2>
-
                <div className="mt-16 rounded-3xl border border-purple-500/20 bg-black/60 p-8">
           <h2 className="text-3xl font-black mb-8">
             Recent EFT Requests
@@ -193,6 +187,5 @@ export default function AdminDashboard() {
         </div>
         </div>
         </div>
-      </div>
   );
 }
