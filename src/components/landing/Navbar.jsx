@@ -34,7 +34,7 @@ export default function Navbar() {
       boxShadow: "0 10px 40px rgba(0,0,0,0.25)",
     }}
     >
-      <div className="max-w-7xl mx-auto px-2 lg:px-4">
+      <div className="max-w-7xl mx-auto px-0 lg:px-2">
   <div className="flex items-center justify-between py-5">
     
     {/* LOGO */}
