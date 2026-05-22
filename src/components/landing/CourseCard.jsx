@@ -18,6 +18,7 @@ import { useCart } from "@/lib/CartContext";
  */
 export default function CourseCard({ course, index }) {
   const priceZAR = (course.priceUSD * USD_TO_ZAR).toFixed(0);
+  const monthlyPrice = (priceZAR / 10).toFixed(0);
 
   const navigate = useNavigate();
   const { cartItems, addCourse } = useCart();
@@ -178,14 +179,25 @@ export default function CourseCard({ course, index }) {
             </div>
 
             <div
-              style={{
-                color: "rgba(255,255,255,0.45)",
-                fontSize: "11px",
-                marginTop: "2px",
-              }}
-            >
-              ≈ ${course.priceUSD.toFixed(2)} USD
-            </div>
+  style={{
+    color: "rgba(255,255,255,0.45)",
+    fontSize: "11px",
+    marginTop: "2px",
+  }}
+>
+  ≈ ${course.priceUSD.toFixed(2)} USD
+</div>
+
+<div
+  style={{
+    color: "#c084fc",
+    fontSize: "12px",
+    fontWeight: 700,
+    marginTop: "6px",
+  }}
+>
+  or R {Number(monthlyPrice).toLocaleString()} / month × 10
+</div>
           </div>
 
           {/* BUTTONS */}

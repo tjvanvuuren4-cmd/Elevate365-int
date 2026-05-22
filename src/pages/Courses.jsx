@@ -55,6 +55,10 @@ export default function Courses() {
                     <p className="text-2xl font-black text-purple-400">
                       R {(course.priceUSD * USD_TO_ZAR).toLocaleString()}
                     </p>
+
+                    <p className="text-sm text-purple-300 mt-2 font-semibold">
+                     or R {(((course.priceUSD * USD_TO_ZAR) / 10)).toFixed(0)} / month × 10
+                    </p>
                   </div>
 
                   <button

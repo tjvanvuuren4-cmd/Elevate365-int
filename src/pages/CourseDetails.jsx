@@ -71,6 +71,10 @@ export default function CourseDetails() {
                 R {priceZAR}
               </p>
 
+              <p className="text-purple-300 mt-3 font-semibold">
+               or R {(Number(priceZAR.replace(/,/g, "")) / 10).toFixed(0)} / month × 10
+              </p>
+
               <button className="mt-6 w-full bg-gradient-to-r from-purple-700 to-purple-500 hover:from-purple-600 hover:to-purple-400 px-10 py-5 rounded-full text-lg font-black uppercase tracking-widest shadow-[0_15px_45px_rgba(124,58,237,0.45)]">
                 Unlock Course
               </button>
