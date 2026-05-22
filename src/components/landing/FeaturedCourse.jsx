@@ -59,7 +59,7 @@ export default function FeaturedCourse() {
             background: "rgba(255,255,255,0.035)",
             border: "1px solid rgba(255,255,255,0.1)",
             backdropFilter: "blur(18px)",
-            boxShadow: "0 35px 100px rgba(124,58,237,0.18)",
+            boxShadow: "0 40px 120px rgba(124,58,237,0.22)",
           }}
         >
           <div className="grid lg:grid-cols-2">
