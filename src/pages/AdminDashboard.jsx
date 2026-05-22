@@ -174,8 +174,64 @@ export default function AdminDashboard() {
                     >
                       {enrollment.certificate_issued ? "Issued" : "Not Issued"}
                     </span>
-                  </div>
                 </div>
+                <div className="flex flex-wrap gap-2 mt-4">
+  <button
+    onClick={async () => {
+      await supabase
+        .from("enrollments")
+        .update({ status: "approved" })
+        .eq("id", enrollment.id);
+
+      window.location.reload();
+    }}
+    className="rounded-full bg-green-500/20 px-4 py-2 text-xs font-bold text-green-300"
+  >
+    Approve
+  </button>
+
+  <button
+    onClick={async () => {
+      await supabase
+        .from("enrollments")
+        .update({ status: "pending" })
+        .eq("id", enrollment.id);
+
+      window.location.reload();
+    }}
+    className="rounded-full bg-yellow-500/20 px-4 py-2 text-xs font-bold text-yellow-300"
+  >
+    Pending
+  </button>
+</div>
+  <button
+    onClick={async () => {
+      await supabase
+        .from("enrollments")
+        .update({ status: "awaiting_documents" })
+        .eq("id", enrollment.id);
+
+      window.location.reload();
+    }}
+    className="rounded-full bg-blue-500/20 px-4 py-2 text-xs font-bold text-blue-300"
+  >
+    Awaiting Docs
+  </button>
+
+  <button
+    onClick={async () => {
+      await supabase
+        .from("enrollments")
+        .update({ status: "removed" })
+        .eq("id", enrollment.id);
+
+      window.location.reload();
+    }}
+    className="rounded-full bg-red-500/20 px-4 py-2 text-xs font-bold text-red-300"
+  >
+    Remove
+  </button>
+</div>
               ))
             ) : (
               <p className="text-gray-500 leading-relaxed">

@@ -97,7 +97,9 @@ useEffect(() => {
              (item) => item.course_id === course.id
              );
 
-              const isUnlocked = !!enrollment;
+              const status = enrollment?.status || "locked";
+
+              const isUnlocked = status === "approved";
               const progress = enrollment?.progress || 0;
               const priceZAR = course.priceUSD * USD_TO_ZAR;
 
@@ -126,7 +128,13 @@ useEffect(() => {
                           : "bg-red-500/20 text-red-300"
                       }`}
                     >
-                      {isUnlocked ? "Unlocked" : "Locked"}
+                      {status === "approved"
+  ? "Approved"
+  : status === "pending"
+  ? "Pending"
+  : status === "awaiting_documents"
+  ? "Awaiting Docs"
+  : "Removed"}
                     </span>
                   </div>
 
@@ -173,7 +181,13 @@ useEffect(() => {
                             : "bg-white/10 text-gray-500 cursor-not-allowed"
                         }`}
                       >
-                        {isUnlocked ? "Continue" : "Awaiting Approval"}
+                        {status === "approved"
+  ? "Continue"
+  : status === "pending"
+  ? "Awaiting Approval"
+  : status === "awaiting_documents"
+  ? "Documents Required"
+  : "Access Removed"}
                       </button>
                     </div>
                   </div>
