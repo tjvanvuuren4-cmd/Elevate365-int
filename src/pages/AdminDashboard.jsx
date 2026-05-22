@@ -18,40 +18,26 @@ export default function AdminDashboard() {
       .select("*")
       .eq("status", "pending");
 
-    if (eftError) {
-      console.error("EFT error:", eftError.message);
-    }
+    if (eftError) console.error("EFT error:", eftError.message);
 
     const { data: enrollmentData, error: enrollmentError } = await supabase
       .from("enrollments")
-      .select(`
-        *,
-        profiles:user_id (
-          email,
-          full_name
-        )
-      `)
+      .select("*")
       .order("created_at", { ascending: false });
 
-    if (enrollmentError) {
-      console.error("Enrollment error:", enrollmentError.message);
-    }
+    if (enrollmentError) console.error("Enrollment error:", enrollmentError.message);
 
     const { data: studentsData, error: studentsError } = await supabase
       .from("profiles")
       .select("*");
 
-    if (studentsError) {
-      console.error("Students error:", studentsError.message);
-    }
+    if (studentsError) console.error("Students error:", studentsError.message);
 
     const { data: coursesData, error: coursesError } = await supabase
       .from("courses")
       .select("*");
 
-    if (coursesError) {
-      console.error("Courses error:", coursesError.message);
-    }
+    if (coursesError) console.error("Courses error:", coursesError.message);
 
     setPendingEFTRequests(eftData?.length || 0);
     setRegisteredStudents(studentsData?.length || 0);
@@ -135,9 +121,52 @@ export default function AdminDashboard() {
         </div>
 
         <div className="mt-16 rounded-3xl border border-purple-500/20 bg-black/60 p-8">
-          <h2 className="text-3xl font-black mb-8">
-            Student Enrollments
-          </h2>
+          <h2 className="text-3xl font-black mb-8">Recent EFT Requests</h2>
+
+          <div className="space-y-4">
+            {orders.length ? (
+              orders.map((order) => (
+                <div
+                  key={order.id}
+                  className="grid md:grid-cols-4 gap-4 items-center rounded-2xl border border-purple-500/10 bg-black/40 p-5"
+                >
+                  <div>
+                    <p className="text-gray-500 text-sm">Name</p>
+                    <p className="font-bold">{order.full_name}</p>
+                  </div>
+
+                  <div>
+                    <p className="text-gray-500 text-sm">Email</p>
+                    <p className="font-bold text-sm break-all">{order.email}</p>
+                  </div>
+
+                  <div>
+                    <p className="text-gray-500 text-sm">Amount</p>
+                    <p className="text-purple-400 font-black">
+                      R {Number(order.total_amount || 0).toLocaleString()}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="text-gray-500 text-sm">Status</p>
+                    <span className="rounded-full bg-yellow-500/20 px-4 py-2 text-xs font-bold uppercase text-yellow-300">
+                      {order.status}
+                    </span>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-500 leading-relaxed">
+                No payment requests yet.
+                <br />
+                New enrollments will appear here automatically.
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="mt-16 rounded-3xl border border-purple-500/20 bg-black/60 p-8">
+          <h2 className="text-3xl font-black mb-8">Student Enrollments</h2>
 
           <div className="space-y-4">
             {enrollments.length ? (
@@ -148,14 +177,9 @@ export default function AdminDashboard() {
                 >
                   <div className="grid md:grid-cols-5 gap-4 items-center">
                     <div>
-                      <p className="text-gray-500 text-sm">Student</p>
-
+                      <p className="text-gray-500 text-sm">Student ID</p>
                       <p className="font-bold text-sm break-all">
-                        {enrollment.profiles?.full_name || "No Name"}
-                      </p>
-
-                      <p className="text-xs text-gray-400 break-all mt-1">
-                        {enrollment.profiles?.email || "No Email"}
+                        {enrollment.user_id}
                       </p>
                     </div>
 
@@ -175,7 +199,6 @@ export default function AdminDashboard() {
 
                     <div>
                       <p className="text-gray-500 text-sm">Status</p>
-
                       <span className="rounded-full bg-purple-500/20 px-4 py-2 text-xs font-bold uppercase text-purple-300">
                         {enrollment.status || "pending"}
                       </span>
@@ -183,7 +206,6 @@ export default function AdminDashboard() {
 
                     <div>
                       <p className="text-gray-500 text-sm">Certificate</p>
-
                       <span
                         className={`rounded-full px-4 py-2 text-xs font-bold uppercase ${
                           enrollment.certificate_issued
@@ -191,9 +213,7 @@ export default function AdminDashboard() {
                             : "bg-yellow-500/20 text-yellow-300"
                         }`}
                       >
-                        {enrollment.certificate_issued
-                          ? "Issued"
-                          : "Not Issued"}
+                        {enrollment.certificate_issued ? "Issued" : "Not Issued"}
                       </span>
                     </div>
                   </div>
@@ -263,6 +283,8 @@ export default function AdminDashboard() {
             ) : (
               <p className="text-gray-500 leading-relaxed">
                 No student enrollments yet.
+                <br />
+                Approved students will appear here automatically.
               </p>
             )}
           </div>
