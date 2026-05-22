@@ -6,48 +6,63 @@ import { Navigate } from "react-router-dom";
 export default function AdminDashboard() {
   const { user, profile, isAdmin } = useAuth();
 
-  console.log("ADMIN USER:", user);
-  console.log("ADMIN PROFILE:", profile);
-  console.log("IS ADMIN:", isAdmin);
-  
   const [pendingEFTRequests, setPendingEFTRequests] = useState(0);
   const [registeredStudents, setRegisteredStudents] = useState(0);
   const [courses, setCourses] = useState(0);
   const [orders, setOrders] = useState([]);
   const [enrollments, setEnrollments] = useState([]);
 
+  const fetchAdminData = async () => {
+    const { data: eftData, error: eftError } = await supabase
+      .from("manual_orders")
+      .select("*")
+      .eq("status", "pending");
+
+    if (eftError) console.error("EFT error:", eftError.message);
+
+    const { data: enrollmentData, error: enrollmentError } = await supabase
+      .from("enrollments")
+      .select("*");
+
+    if (enrollmentError) console.error("Enrollment error:", enrollmentError.message);
+
+    const { data: studentsData, error: studentsError } = await supabase
+      .from("profiles")
+      .select("*");
+
+    if (studentsError) console.error("Students error:", studentsError.message);
+
+    const { data: coursesData, error: coursesError } = await supabase
+      .from("courses")
+      .select("*");
+
+    if (coursesError) console.error("Courses error:", coursesError.message);
+
+    setPendingEFTRequests(eftData?.length || 0);
+    setRegisteredStudents(studentsData?.length || 0);
+    setCourses(coursesData?.length || 0);
+    setOrders(eftData || []);
+    setEnrollments(enrollmentData || []);
+  };
+
   useEffect(() => {
-    const fetchAdminData = async () => {
-      const { data: eftData } = await supabase
-        .from("manual_orders")
-        .select("*")
-        .eq("status", "pending");
-
-         const { data: enrollmentData, error: enrollmentError } = await supabase
-        .from("enrollments")
-        .select("*");
-
-        if (enrollmentError) {
-        console.error("Enrollment error:", enrollmentError.message);
-}
-
-      const { data: studentsData } = await supabase
-        .from("profiles")
-        .select("*");
-
-      const { data: coursesData } = await supabase
-        .from("courses")
-        .select("*");
-
-      setPendingEFTRequests(eftData?.length || 0);
-      setRegisteredStudents(studentsData?.length || 0);
-      setCourses(coursesData?.length || 0);
-      setOrders(eftData || []);
-      setEnrollments(enrollmentData || []);
-    };
-
     fetchAdminData();
   }, []);
+
+  const updateEnrollmentStatus = async (enrollmentId, status) => {
+    const { error } = await supabase
+      .from("enrollments")
+      .update({ status })
+      .eq("id", enrollmentId);
+
+    if (error) {
+      console.error("Update error:", error.message);
+      alert(error.message);
+      return;
+    }
+
+    fetchAdminData();
+  };
 
   if (!isAdmin) {
     return <Navigate to="/login" />;
@@ -86,10 +101,9 @@ export default function AdminDashboard() {
             </h2>
           </div>
         </div>
-               <div className="mt-16 rounded-3xl border border-purple-500/20 bg-black/60 p-8">
-          <h2 className="text-3xl font-black mb-8">
-            Recent EFT Requests
-          </h2>
+
+        <div className="mt-16 rounded-3xl border border-purple-500/20 bg-black/60 p-8">
+          <h2 className="text-3xl font-black mb-8">Recent EFT Requests</h2>
 
           <div className="space-y-4">
             {orders.length ? (
@@ -111,7 +125,7 @@ export default function AdminDashboard() {
                   <div>
                     <p className="text-gray-500 text-sm">Amount</p>
                     <p className="text-purple-400 font-black">
-                      R {Number(order.total_amount).toLocaleString()}
+                      R {Number(order.total_amount || 0).toLocaleString()}
                     </p>
                   </div>
 
@@ -125,7 +139,8 @@ export default function AdminDashboard() {
               ))
             ) : (
               <p className="text-gray-500 leading-relaxed">
-                No payment requests yet.<br />
+                No payment requests yet.
+                <br />
                 New enrollments will appear here automatically.
               </p>
             )}
@@ -133,115 +148,110 @@ export default function AdminDashboard() {
         </div>
 
         <div className="mt-16 rounded-3xl border border-purple-500/20 bg-black/60 p-8">
-          <h2 className="text-3xl font-black mb-8">
-            Student Enrollments
-          </h2>
+          <h2 className="text-3xl font-black mb-8">Student Enrollments</h2>
 
           <div className="space-y-4">
             {enrollments.length ? (
               enrollments.map((enrollment) => (
                 <div
                   key={enrollment.id}
-                  className="grid md:grid-cols-4 gap-4 items-center rounded-2xl border border-purple-500/10 bg-black/40 p-5"
+                  className="rounded-2xl border border-purple-500/10 bg-black/40 p-5"
                 >
-                  <div>
-                    <p className="text-gray-500 text-sm">Student ID</p>
-                    <p className="font-bold text-sm break-all">
-                      {enrollment.user_id}
-                    </p>
+                  <div className="grid md:grid-cols-5 gap-4 items-center">
+                    <div>
+                      <p className="text-gray-500 text-sm">Student ID</p>
+                      <p className="font-bold text-sm break-all">
+                        {enrollment.user_id}
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="text-gray-500 text-sm">Course ID</p>
+                      <p className="font-bold text-sm break-all">
+                        {enrollment.course_id}
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="text-gray-500 text-sm">Progress</p>
+                      <p className="text-purple-400 font-black">
+                        {enrollment.progress || 0}%
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="text-gray-500 text-sm">Status</p>
+                      <span className="rounded-full bg-purple-500/20 px-4 py-2 text-xs font-bold uppercase text-purple-300">
+                        {enrollment.status || "pending"}
+                      </span>
+                    </div>
+
+                    <div>
+                      <p className="text-gray-500 text-sm">Certificate</p>
+                      <span
+                        className={`rounded-full px-4 py-2 text-xs font-bold uppercase ${
+                          enrollment.certificate_issued
+                            ? "bg-green-500/20 text-green-300"
+                            : "bg-yellow-500/20 text-yellow-300"
+                        }`}
+                      >
+                        {enrollment.certificate_issued ? "Issued" : "Not Issued"}
+                      </span>
+                    </div>
                   </div>
 
-                  <div>
-                    <p className="text-gray-500 text-sm">Course ID</p>
-                    <p className="font-bold">{enrollment.course_id}</p>
-                  </div>
-
-                  <div>
-                    <p className="text-gray-500 text-sm">Progress</p>
-                    <p className="text-purple-400 font-black">
-                      {enrollment.progress}%
-                    </p>
-                  </div>
-
-                  <div>
-                    <p className="text-gray-500 text-sm">Certificate</p>
-                    <span
-                      className={`rounded-full px-4 py-2 text-xs font-bold uppercase ${
-                        enrollment.certificate_issued
-                          ? "bg-green-500/20 text-green-300"
-                          : "bg-yellow-500/20 text-yellow-300"
-                      }`}
+                  <div className="flex flex-wrap gap-2 mt-5">
+                    <button
+                      onClick={() =>
+                        updateEnrollmentStatus(enrollment.id, "approved")
+                      }
+                      className="rounded-full bg-green-500/20 px-4 py-2 text-xs font-bold text-green-300"
                     >
-                      {enrollment.certificate_issued ? "Issued" : "Not Issued"}
-                    </span>
+                      Approve
+                    </button>
+
+                    <button
+                      onClick={() =>
+                        updateEnrollmentStatus(enrollment.id, "pending")
+                      }
+                      className="rounded-full bg-yellow-500/20 px-4 py-2 text-xs font-bold text-yellow-300"
+                    >
+                      Pending
+                    </button>
+
+                    <button
+                      onClick={() =>
+                        updateEnrollmentStatus(
+                          enrollment.id,
+                          "awaiting_documents"
+                        )
+                      }
+                      className="rounded-full bg-blue-500/20 px-4 py-2 text-xs font-bold text-blue-300"
+                    >
+                      Awaiting Docs
+                    </button>
+
+                    <button
+                      onClick={() =>
+                        updateEnrollmentStatus(enrollment.id, "removed")
+                      }
+                      className="rounded-full bg-red-500/20 px-4 py-2 text-xs font-bold text-red-300"
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </div>
-                <div className="flex flex-wrap gap-2 mt-4">
-  <button
-    onClick={async () => {
-      await supabase
-        .from("enrollments")
-        .update({ status: "approved" })
-        .eq("id", enrollment.id);
-
-      window.location.reload();
-    }}
-    className="rounded-full bg-green-500/20 px-4 py-2 text-xs font-bold text-green-300"
-  >
-    Approve
-  </button>
-
-  <button
-    onClick={async () => {
-      await supabase
-        .from("enrollments")
-        .update({ status: "pending" })
-        .eq("id", enrollment.id);
-
-      window.location.reload();
-    }}
-    className="rounded-full bg-yellow-500/20 px-4 py-2 text-xs font-bold text-yellow-300"
-  >
-    Pending
-  </button>
-</div>
-  <button
-    onClick={async () => {
-      await supabase
-        .from("enrollments")
-        .update({ status: "awaiting_documents" })
-        .eq("id", enrollment.id);
-
-      window.location.reload();
-    }}
-    className="rounded-full bg-blue-500/20 px-4 py-2 text-xs font-bold text-blue-300"
-  >
-    Awaiting Docs
-  </button>
-
-  <button
-    onClick={async () => {
-      await supabase
-        .from("enrollments")
-        .update({ status: "removed" })
-        .eq("id", enrollment.id);
-
-      window.location.reload();
-    }}
-    className="rounded-full bg-red-500/20 px-4 py-2 text-xs font-bold text-red-300"
-  >
-    Remove
-  </button>
-</div>
               ))
             ) : (
               <p className="text-gray-500 leading-relaxed">
-                No student enrollments yet.<br />
+                No student enrollments yet.
+                <br />
                 Approved students will appear here automatically.
               </p>
             )}
           </div>
         </div>
-        </div>
-        </div>
+      </div>
+    </div>
   );
 }

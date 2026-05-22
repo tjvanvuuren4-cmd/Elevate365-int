@@ -8,25 +8,33 @@ export default function StudentDashboard() {
 
   const [enrollments, setEnrollments] = useState([]);
 
-useEffect(() => {
-  const fetchEnrollments = async () => {
-    if (!user) return;
+  useEffect(() => {
+    const fetchEnrollments = async () => {
+      if (!user) return;
 
-    const { data, error } = await supabase
-      .from("enrollments")
-      .select("*")
-      .eq("user_id", user.id);
+      const { data, error } = await supabase
+        .from("enrollments")
+        .select("*")
+        .eq("user_id", user.id);
 
-    if (error) {
-      console.error("Enrollment error:", error.message);
-      return;
-    }
+      if (error) {
+        console.error("Enrollment error:", error.message);
+        return;
+      }
 
-    setEnrollments(data || []);
-  };
+      setEnrollments(data || []);
+    };
 
-  fetchEnrollments();
-}, [user]);
+    fetchEnrollments();
+  }, [user]);
+
+  const approvedCourses = enrollments.filter(
+    (item) => item.status === "approved"
+  ).length;
+
+  const certificates = enrollments.filter(
+    (item) => item.certificate_issued === true
+  ).length;
 
   return (
     <div className="min-h-screen bg-[#03030b] text-white px-4 sm:px-6 lg:px-8 py-24">
@@ -46,7 +54,8 @@ useEffect(() => {
               </h1>
 
               <p className="text-gray-400 mt-4 max-w-2xl">
-                Continue your learning journey, track your progress, and access your enrolled Elevate•365 courses.
+                Continue your learning journey, track your progress, and access
+                your enrolled Elevate•365 courses.
               </p>
             </div>
 
@@ -63,21 +72,21 @@ useEffect(() => {
           <div className="rounded-3xl border border-purple-500/20 bg-black/50 p-6">
             <p className="text-gray-500">My Courses</p>
             <h2 className="text-4xl font-black text-purple-400 mt-2">
-              {enrollments.length}
+              {approvedCourses}
             </h2>
           </div>
 
           <div className="rounded-3xl border border-purple-500/20 bg-black/50 p-6">
             <p className="text-gray-500">Progress</p>
             <h2 className="text-4xl font-black text-purple-400 mt-2">
-              0%
+              {approvedCourses > 0 ? "Active" : "0%"}
             </h2>
           </div>
 
           <div className="rounded-3xl border border-purple-500/20 bg-black/50 p-6">
             <p className="text-gray-500">Certificates</p>
             <h2 className="text-4xl font-black text-purple-400 mt-2">
-              0
+              {certificates}
             </h2>
           </div>
         </div>
@@ -94,13 +103,16 @@ useEffect(() => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
             {courses.map((course) => {
               const enrollment = enrollments.find(
-             (item) => item.course_id === course.id
-             );
+                (item) =>
+                  String(item.course_id) === String(course.id)
+              );
 
               const status = enrollment?.status || "locked";
 
               const isUnlocked = status === "approved";
+
               const progress = enrollment?.progress || 0;
+
               const priceZAR = course.priceUSD * USD_TO_ZAR;
 
               return (
@@ -125,16 +137,24 @@ useEffect(() => {
                       className={`absolute top-4 right-4 rounded-full px-4 py-2 text-xs font-black uppercase tracking-widest ${
                         isUnlocked
                           ? "bg-green-500/20 text-green-300"
-                          : "bg-red-500/20 text-red-300"
+                          : status === "pending"
+                          ? "bg-yellow-500/20 text-yellow-300"
+                          : status === "awaiting_documents"
+                          ? "bg-blue-500/20 text-blue-300"
+                          : status === "removed"
+                          ? "bg-red-500/20 text-red-300"
+                          : "bg-gray-500/20 text-gray-300"
                       }`}
                     >
                       {status === "approved"
-  ? "Approved"
-  : status === "pending"
-  ? "Pending"
-  : status === "awaiting_documents"
-  ? "Awaiting Docs"
-  : "Removed"}
+                        ? "Approved"
+                        : status === "pending"
+                        ? "Pending"
+                        : status === "awaiting_documents"
+                        ? "Awaiting Docs"
+                        : status === "removed"
+                        ? "Removed"
+                        : "Locked"}
                     </span>
                   </div>
 
@@ -159,7 +179,7 @@ useEffect(() => {
 
                       <div className="h-2 rounded-full bg-white/10 overflow-hidden">
                         <div
-                          className="h-full bg-purple-500 rounded-full"
+                          className="h-full bg-purple-500 rounded-full transition-all duration-500"
                           style={{ width: `${progress}%` }}
                         />
                       </div>
@@ -182,12 +202,14 @@ useEffect(() => {
                         }`}
                       >
                         {status === "approved"
-  ? "Continue"
-  : status === "pending"
-  ? "Awaiting Approval"
-  : status === "awaiting_documents"
-  ? "Documents Required"
-  : "Access Removed"}
+                          ? "Continue"
+                          : status === "pending"
+                          ? "Awaiting Approval"
+                          : status === "awaiting_documents"
+                          ? "Documents Required"
+                          : status === "removed"
+                          ? "Access Removed"
+                          : "Locked"}
                       </button>
                     </div>
                   </div>
