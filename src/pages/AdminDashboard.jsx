@@ -108,7 +108,10 @@ export default function AdminDashboard() {
         </div>
       ))
     ) : (
-      <p className="text-gray-500">No EFT requests yet.</p>
+      <p className="text-gray-500 leading-relaxed">
+         No payment requests yet.<br />
+         New enrollments will appear here automatically.
+     </p>
     )}
   </div>
         </div>
