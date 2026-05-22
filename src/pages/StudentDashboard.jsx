@@ -79,7 +79,7 @@ export default function StudentDashboard() {
           <div className="rounded-3xl border border-purple-500/20 bg-black/50 p-6">
             <p className="text-gray-500">Progress</p>
             <h2 className="text-4xl font-black text-purple-400 mt-2">
-              {approvedCourses > 0 ? "Active" : "0%"}
+              {approvedCourses > 0 ? "Active" : "Active Member"}
             </h2>
           </div>
 
