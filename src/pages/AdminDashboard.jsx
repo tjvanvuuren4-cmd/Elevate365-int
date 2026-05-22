@@ -21,9 +21,9 @@ export default function AdminDashboard() {
     if (eftError) console.error("EFT error:", eftError.message);
 
     const { data: enrollmentData, error: enrollmentError } = await supabase
-      .from("enrollments")
-      .select("*")
-      .order("created_at", { ascending: false });
+  .from("enrollments")
+  .select("*")
+  .order("created_at", { ascending: false });
 
     if (enrollmentError) console.error("Enrollment error:", enrollmentError.message);
 
