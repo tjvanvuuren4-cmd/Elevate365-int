@@ -1,10 +1,32 @@
 import { useAuth } from "@/lib/AuthContext";
 import { courses, USD_TO_ZAR } from "@/data/courses";
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabaseClient";
 
 export default function StudentDashboard() {
   const { user, logout } = useAuth();
 
-  const enrolledCourseIds = [4]; // temporary demo unlocked course
+  const [enrollments, setEnrollments] = useState([]);
+
+useEffect(() => {
+  const fetchEnrollments = async () => {
+    if (!user) return;
+
+    const { data, error } = await supabase
+      .from("enrollments")
+      .select("*")
+      .eq("user_id", user.id);
+
+    if (error) {
+      console.error("Enrollment error:", error.message);
+      return;
+    }
+
+    setEnrollments(data || []);
+  };
+
+  fetchEnrollments();
+}, [user]);
 
   return (
     <div className="min-h-screen bg-[#03030b] text-white px-4 sm:px-6 lg:px-8 py-24">
@@ -71,7 +93,12 @@ export default function StudentDashboard() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
             {courses.map((course) => {
-              const isUnlocked = enrolledCourseIds.includes(course.id);
+              const enrollment = enrollments.find(
+             (item) => item.course_id === course.id
+             );
+
+              const isUnlocked = !!enrollment;
+              const progress = enrollment?.progress || 0;
               const priceZAR = course.priceUSD * USD_TO_ZAR;
 
               return (
@@ -119,13 +146,13 @@ export default function StudentDashboard() {
                     <div className="mt-6">
                       <div className="flex justify-between text-xs text-gray-500 mb-2">
                         <span>Progress</span>
-                        <span>{isUnlocked ? "12%" : "0%"}</span>
+                        <span>{progress}%</span>
                       </div>
 
                       <div className="h-2 rounded-full bg-white/10 overflow-hidden">
                         <div
                           className="h-full bg-purple-500 rounded-full"
-                          style={{ width: isUnlocked ? "12%" : "0%" }}
+                          style={{ width: `${progress}%` }}
                         />
                       </div>
                     </div>
