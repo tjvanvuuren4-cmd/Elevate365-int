@@ -26,13 +26,13 @@ export default function Navbar() {
   ];
 
   return (
-    <nav
-      className="fixed top-0 left-0 right-0 z-50 border-b"
-      style={{
-        background: "rgba(3,3,11,0.88)",
-        backdropFilter: "blur(18px)",
-        borderColor: "rgba(255,255,255,0.08)",
-      }}
+  <nav
+    className="fixed top-0 left-0 right-0 z-50 border-b backdrop-blur-xl"
+    style={{
+      background: "rgba(3,3,11,0.72)",
+      borderColor: "rgba(255,255,255,0.05)",
+      boxShadow: "0 10px 40px rgba(0,0,0,0.25)",
+    }}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between py-4">
