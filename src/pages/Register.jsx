@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/lib/AuthContext";
+import { supabase } from "@/lib/supabaseClient";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -12,14 +13,33 @@ export default function Register() {
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    const { error } = await register(email, password);
+    const { data, error } = await register(email, password);
 
     if (error) {
       alert(error.message);
-    } else {
-      alert("Account created successfully.");
-      navigate("/login");
+      return;
     }
+
+    const user = data?.user;
+
+    if (user) {
+      const { error: enrollmentError } = await supabase
+        .from("enrollments")
+        .insert({
+          user_id: user.id,
+          course_id: 1,
+          status: "pending",
+          progress: 0,
+          certificate_issued: false,
+        });
+
+      if (enrollmentError) {
+        console.error(enrollmentError.message);
+      }
+    }
+
+    alert("Account created successfully.");
+    navigate("/login");
   };
 
   return (
