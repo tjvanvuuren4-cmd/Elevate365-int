@@ -4,7 +4,7 @@ import { useAuth } from "@/lib/AuthContext";
 import { Navigate } from "react-router-dom";
 
 export default function AdminDashboard() {
-  const { user, profile, isAdmin } = useAuth();
+  const { isAdmin } = useAuth();
 
   const [pendingEFTRequests, setPendingEFTRequests] = useState(0);
   const [registeredStudents, setRegisteredStudents] = useState(0);
@@ -22,7 +22,8 @@ export default function AdminDashboard() {
 
     const { data: enrollmentData, error: enrollmentError } = await supabase
       .from("enrollments")
-      .select("*");
+      .select("*")
+      .order("created_at", { ascending: false });
 
     if (enrollmentError) console.error("Enrollment error:", enrollmentError.message);
 
@@ -56,7 +57,24 @@ export default function AdminDashboard() {
       .eq("id", enrollmentId);
 
     if (error) {
-      console.error("Update error:", error.message);
+      console.error("Status update error:", error.message);
+      alert(error.message);
+      return;
+    }
+
+    fetchAdminData();
+  };
+
+  const updateEnrollmentProgress = async (enrollmentId, progress) => {
+    const safeProgress = Math.max(0, Math.min(100, Number(progress) || 0));
+
+    const { error } = await supabase
+      .from("enrollments")
+      .update({ progress: safeProgress })
+      .eq("id", enrollmentId);
+
+    if (error) {
+      console.error("Progress update error:", error.message);
       alert(error.message);
       return;
     }
@@ -200,7 +218,7 @@ export default function AdminDashboard() {
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap gap-2 mt-5">
+                  <div className="flex flex-wrap items-center gap-3 mt-5">
                     <button
                       onClick={() =>
                         updateEnrollmentStatus(enrollment.id, "approved")
@@ -239,6 +257,26 @@ export default function AdminDashboard() {
                     >
                       Remove
                     </button>
+
+                    <div className="flex items-center gap-2 md:ml-auto">
+                      <p className="text-xs text-gray-400 uppercase">
+                        Progress
+                      </p>
+
+                      <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        defaultValue={enrollment.progress || 0}
+                        onBlur={(e) =>
+                          updateEnrollmentProgress(
+                            enrollment.id,
+                            e.target.value
+                          )
+                        }
+                        className="w-24 rounded-full border border-purple-500/20 bg-white/10 px-4 py-2 text-sm font-bold text-white outline-none"
+                      />
+                    </div>
                   </div>
                 </div>
               ))
