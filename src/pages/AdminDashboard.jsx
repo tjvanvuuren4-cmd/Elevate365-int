@@ -14,6 +14,7 @@ export default function AdminDashboard() {
   const [registeredStudents, setRegisteredStudents] = useState(0);
   const [courses, setCourses] = useState(0);
   const [orders, setOrders] = useState([]);
+  const [enrollments, setEnrollments] = useState([]);
 
   useEffect(() => {
     const fetchAdminData = async () => {
@@ -21,6 +22,14 @@ export default function AdminDashboard() {
         .from("manual_orders")
         .select("*")
         .eq("status", "pending");
+
+         const { data: enrollmentData, error: enrollmentError } = await supabase
+        .from("enrollments")
+        .select("*");
+
+        if (enrollmentError) {
+        console.error("Enrollment error:", enrollmentError.message);
+}
 
       const { data: studentsData } = await supabase
         .from("profiles")
@@ -34,6 +43,7 @@ export default function AdminDashboard() {
       setRegisteredStudents(studentsData?.length || 0);
       setCourses(coursesData?.length || 0);
       setOrders(eftData || []);
+      setEnrollments(enrollmentData || []);
     };
 
     fetchAdminData();
@@ -82,40 +92,107 @@ export default function AdminDashboard() {
     Recent EFT Requests
   </h2>
 
-  <div className="space-y-4">
-    {orders.length ? (
-      orders.map((order) => (
-        <div
-          key={order.id}
-          className="flex items-center justify-between rounded-2xl border border-purple-500/10 bg-black/40 p-5"
-        >
-          <div>
-            <p className="font-bold text-lg">{order.full_name}</p>
-            <p className="text-gray-400 text-sm">{order.email}</p>
-          </div>
+               <div className="mt-16 rounded-3xl border border-purple-500/20 bg-black/60 p-8">
+          <h2 className="text-3xl font-black mb-8">
+            Recent EFT Requests
+          </h2>
 
-          <div>
-            <p className="text-purple-400 font-black text-xl">
-              R {Number(order.total_amount).toLocaleString()}
-            </p>
-          </div>
+          <div className="space-y-4">
+            {orders.length ? (
+              orders.map((order) => (
+                <div
+                  key={order.id}
+                  className="grid md:grid-cols-4 gap-4 items-center rounded-2xl border border-purple-500/10 bg-black/40 p-5"
+                >
+                  <div>
+                    <p className="text-gray-500 text-sm">Name</p>
+                    <p className="font-bold">{order.full_name}</p>
+                  </div>
 
-          <div>
-            <span className="rounded-full bg-yellow-500/20 px-4 py-2 text-xs font-bold uppercase tracking-widest text-yellow-300">
-              {order.status}
-            </span>
+                  <div>
+                    <p className="text-gray-500 text-sm">Email</p>
+                    <p className="font-bold text-sm break-all">{order.email}</p>
+                  </div>
+
+                  <div>
+                    <p className="text-gray-500 text-sm">Amount</p>
+                    <p className="text-purple-400 font-black">
+                      R {Number(order.total_amount).toLocaleString()}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="text-gray-500 text-sm">Status</p>
+                    <span className="rounded-full bg-yellow-500/20 px-4 py-2 text-xs font-bold uppercase text-yellow-300">
+                      {order.status}
+                    </span>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-500 leading-relaxed">
+                No payment requests yet.<br />
+                New enrollments will appear here automatically.
+              </p>
+            )}
           </div>
         </div>
-      ))
-    ) : (
-      <p className="text-gray-500 leading-relaxed">
-         No payment requests yet.<br />
-         New enrollments will appear here automatically.
-     </p>
-    )}
-  </div>
+
+        <div className="mt-16 rounded-3xl border border-purple-500/20 bg-black/60 p-8">
+          <h2 className="text-3xl font-black mb-8">
+            Student Enrollments
+          </h2>
+
+          <div className="space-y-4">
+            {enrollments.length ? (
+              enrollments.map((enrollment) => (
+                <div
+                  key={enrollment.id}
+                  className="grid md:grid-cols-4 gap-4 items-center rounded-2xl border border-purple-500/10 bg-black/40 p-5"
+                >
+                  <div>
+                    <p className="text-gray-500 text-sm">Student ID</p>
+                    <p className="font-bold text-sm break-all">
+                      {enrollment.user_id}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="text-gray-500 text-sm">Course ID</p>
+                    <p className="font-bold">{enrollment.course_id}</p>
+                  </div>
+
+                  <div>
+                    <p className="text-gray-500 text-sm">Progress</p>
+                    <p className="text-purple-400 font-black">
+                      {enrollment.progress}%
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="text-gray-500 text-sm">Certificate</p>
+                    <span
+                      className={`rounded-full px-4 py-2 text-xs font-bold uppercase ${
+                        enrollment.certificate_issued
+                          ? "bg-green-500/20 text-green-300"
+                          : "bg-yellow-500/20 text-yellow-300"
+                      }`}
+                    >
+                      {enrollment.certificate_issued ? "Issued" : "Not Issued"}
+                    </span>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-500 leading-relaxed">
+                No student enrollments yet.<br />
+                Approved students will appear here automatically.
+              </p>
+            )}
+          </div>
+        </div>
+        </div>
         </div>
       </div>
-    </div>
   );
 }
