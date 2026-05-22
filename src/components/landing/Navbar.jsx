@@ -35,40 +35,55 @@ export default function Navbar() {
     }}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex items-center justify-between py-4">
-          {/* LOGO */}
-          <a href="#" className="flex items-center gap-3">
-            <div className="flex flex-col leading-none">
-              <span
-                style={{
-                  fontSize: "34px",
-                  fontWeight: 900,
-                  letterSpacing: "0.18em",
-                  fontFamily: "Inter, sans-serif",
-                  lineHeight: 1,
-                  background:
-                    "linear-gradient(135deg,#8b5cf6,#c084fc)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
-              >
-                ELEVATE•365
-              </span>
+  <div className="flex items-center justify-between py-5">
+    
+    {/* LOGO */}
+    <a href="#" className="group relative flex items-center gap-3">
+      <div className="relative flex flex-col leading-none">
 
-              <span
-                style={{
-                  letterSpacing: "0.35em",
-                  color: "rgba(255,255,255,0.45)",
-                  fontSize: "10px",
-                  marginTop: "8px",
-                  textTransform: "uppercase",
-                  fontFamily: "Inter, sans-serif",
-                }}
-              >
-                Cyber • Blockchain
-              </span>
-            </div>
-          </a>
+        {/* Glow */}
+        <div className="absolute -inset-6 bg-purple-500/10 blur-3xl opacity-70 group-hover:opacity-100 transition-all duration-500" />
+
+        {/* Main Logo */}
+        <span
+          style={{
+            fontSize: "42px",
+            fontWeight: 900,
+            letterSpacing: "0.22em",
+            fontFamily: "Inter, sans-serif",
+            lineHeight: 1,
+            background:
+              "linear-gradient(135deg,#ffffff 0%,#c084fc 45%,#8b5cf6 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            textShadow: "0 0 35px rgba(139,92,246,0.35)",
+          }}
+          className="relative z-10 transition-all duration-500 group-hover:scale-[1.02]"
+        >
+          ELEVATE•365
+        </span>
+
+        {/* Bottom Line */}
+        <div className="flex items-center gap-3 mt-4 relative z-10">
+          <div className="h-px w-10 bg-gradient-to-r from-transparent to-purple-500" />
+
+          <span
+            style={{
+              letterSpacing: "0.42em",
+              color: "rgba(255,255,255,0.5)",
+              fontSize: "10px",
+              textTransform: "uppercase",
+              fontFamily: "Inter, sans-serif",
+              fontWeight: 500,
+            }}
+          >
+            Cyber • Blockchain • Academy
+          </span>
+
+          <div className="h-px w-10 bg-gradient-to-l from-transparent to-purple-500" />
+        </div>
+      </div>
+    </a>
 
           {/* DESKTOP LINKS */}
           <div className="hidden md:flex items-center gap-10">
