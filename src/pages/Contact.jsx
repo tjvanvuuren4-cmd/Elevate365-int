@@ -183,14 +183,7 @@ export default function Contact() {
     Send Message
   </button>
 </div>
-
-              {submitted && (
-                <div className="rounded-3xl border border-emerald-200 bg-emerald-50 px-4 py-4 text-sm text-emerald-900">
-                  Thank you! Your message has been sent successfully. Our team will reach out shortly.
-                </div>
-              )}
-            </div>
-
+</div>
             <aside className="rounded-[2rem] border border-border/40 bg-slate-950/5 p-6 shadow-sm">
               <div className="space-y-5">
                 <div>
