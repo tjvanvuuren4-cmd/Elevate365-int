@@ -41,7 +41,7 @@ export const courses = [
   {
     id: 4,
     title: "Advanced Web Development Mastery Course",
-    description: "A 10-week advanced web-development program covering TypeScript, GraphQL, microservices, Docker, CI/CD, cloud deployment, automated testing, monitoring, and large-scale architecture.",
+    description: "A 20-week advanced web-development program covering TypeScript, GraphQL, microservices, Docker, CI/CD, cloud deployment, automated testing, monitoring, and large-scale architecture.",
     priceUSD: 2000.00,
     category: "Web Development",
     image: "https://media.base44.com/images/public/6a057b43c92975536478e242/2f4999616_generated_eb437a0e.png",
