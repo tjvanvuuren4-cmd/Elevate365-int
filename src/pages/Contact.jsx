@@ -13,13 +13,6 @@ export default function Contact() {
     setSubmitted(false);
   };
 
-  /** @param {React.FormEvent<HTMLFormElement>} event */
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setSubmitted(true);
-    setForm({ name: "", email: "", phone: "", subject: "", message: "" });
-  };
-
   const isFormValid = form.name && form.email && form.subject && form.message;
   const remainingChars = maxChars - form.message.length;
 
@@ -83,14 +76,36 @@ export default function Contact() {
         </section>
 
         <section className="rounded-[2rem] border border-border/50 bg-background p-8 shadow-lg shadow-slate-900/5">
-          <form onSubmit={handleSubmit} className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-            <div className="space-y-6">
-              <div>
-                <h2 className="text-2xl font-semibold">Send us a Message</h2>
-                <p className="mt-3 text-sm text-muted-foreground">
-                  Complete the form and we’ll respond as soon as possible.
-                </p>
-              </div>
+
+  <form
+    action="https://api.web3forms.com/submit"
+    method="POST"
+    className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start"
+  >
+
+    <input
+  type="hidden"
+  name="access_key"
+  value="e29308a8-b32f-4325-bf07-859b02bed7ff"
+/>
+
+    <input
+      type="checkbox"
+      name="botcheck"
+      style={{ display: "none" }}
+    />
+
+    <div className="space-y-6">
+
+      <div>
+        <h2 className="text-2xl font-semibold">
+          Send us a Message
+        </h2>
+
+        <p className="mt-3 text-sm text-muted-foreground">
+          Complete the form and we’ll respond as soon as possible.
+        </p>
+      </div>
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block text-sm font-medium text-foreground">
@@ -157,15 +172,17 @@ export default function Contact() {
               </label>
 
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-xs text-muted-foreground">{remainingChars} characters remaining</p>
-                <button
-                  type="submit"
-                  disabled={!isFormValid}
-                  className="inline-flex items-center justify-center rounded-full bg-primary px-8 py-3 text-sm font-semibold text-background transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:bg-primary/40"
-                >
-                  Send Message
-                </button>
-              </div>
+  <p className="text-xs text-muted-foreground">
+    {remainingChars} characters remaining
+  </p>
+
+  <button
+    type="submit"
+    className="inline-flex items-center justify-center rounded-full bg-primary px-8 py-3 text-sm font-semibold text-white transition hover:bg-primary/90"
+  >
+    Send Message
+  </button>
+</div>
 
               {submitted && (
                 <div className="rounded-3xl border border-emerald-200 bg-emerald-50 px-4 py-4 text-sm text-emerald-900">
