@@ -1,19 +1,22 @@
 import React, { useState } from "react";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 
 export default function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
-  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
+
   const maxChars = 2500;
 
-  /** @param {React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>} event */
   const handleChange = (event) => {
     const { name, value } = event.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    setSubmitted(false);
   };
 
-  const isFormValid = form.name && form.email && form.subject && form.message;
   const remainingChars = maxChars - form.message.length;
 
   return (
@@ -22,53 +25,68 @@ export default function Contact() {
         <section className="rounded-[2rem] border border-border/40 bg-card/90 p-8 shadow-xl shadow-slate-900/5 backdrop-blur-xl sm:p-12">
           <div className="grid gap-10 lg:grid-cols-[1fr_0.95fr] lg:items-center">
             <div className="space-y-6">
-              <p className="text-sm font-semibold uppercase tracking-[0.35em] text-primary">Contact Us</p>
-              <h1 className="max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">Have questions about our courses? Need help choosing the right program?</h1>
+              <p className="text-sm font-semibold uppercase tracking-[0.35em] text-primary">
+                Contact Us
+              </p>
+
+              <h1 className="max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">
+                Have questions about our courses? Need help choosing the right program?
+              </h1>
+
               <p className="max-w-2xl text-base leading-8 text-muted-foreground">
                 We’re here to help you succeed. Share your details below and our team will reach out with personalized guidance.
               </p>
+
               <div className="relative overflow-hidden rounded-3xl border border-border/70 bg-slate-950/5">
                 <img
                   src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80"
                   alt="Team collaborating on cybersecurity projects"
                   className="h-72 w-full object-cover"
                 />
+
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent px-6 py-5 text-white">
-                  <p className="text-sm uppercase tracking-[0.35em] text-primary">Elevate365</p>
-                  <p className="mt-2 max-w-xl text-lg font-semibold">Expert guidance and support for every step of your learning journey.</p>
+                  <p className="text-sm uppercase tracking-[0.35em] text-primary">
+                    Elevate365
+                  </p>
+                  <p className="mt-2 max-w-xl text-lg font-semibold">
+                    Expert guidance and support for every step of your learning journey.
+                  </p>
                 </div>
               </div>
             </div>
 
-            <div className="grid gap-6 lg:grid-cols-[1fr]">
-              <div className="sticky top-24 rounded-[2rem] border border-border/50 bg-background p-8 shadow-lg shadow-slate-900/5">
-                <div className="mb-6 flex items-center gap-3 rounded-3xl bg-primary/10 p-4 text-primary">
-                  <MapPin className="h-5 w-5" />
-                  <p className="text-sm font-semibold">Reach out anytime — we typically reply within one business day.</p>
+            <div className="sticky top-24 rounded-[2rem] border border-border/50 bg-background p-8 shadow-lg shadow-slate-900/5">
+              <div className="mb-6 flex items-center gap-3 rounded-3xl bg-primary/10 p-4 text-primary">
+                <MapPin className="h-5 w-5" />
+                <p className="text-sm font-semibold">
+                  Reach out anytime — we typically reply within one business day.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <p className="text-sm font-semibold text-foreground">Contact Summary</p>
+                  <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                    Submit your details and our admissions team will contact you to discuss the best program for your goals.
+                  </p>
                 </div>
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">Contact Summary</p>
-                    <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                      Submit your details and our admissions team will contact you to discuss the best program for your goals.
-                    </p>
-                  </div>
-                  <div className="rounded-3xl bg-slate-950/5 p-5">
-                    <p className="text-sm font-semibold text-foreground">What we need</p>
-                    <ul className="mt-3 space-y-2 text-sm leading-7 text-muted-foreground list-disc pl-5">
-                      <li>Your name and email</li>
-                      <li>Preferred course or area of interest</li>
-                      <li>A brief message about your goals</li>
-                    </ul>
-                  </div>
-                  <div className="rounded-3xl bg-slate-950/5 p-5">
-                    <p className="text-sm font-semibold text-foreground">Why contact us?</p>
-                    <ul className="mt-3 space-y-2 text-sm leading-7 text-muted-foreground list-disc pl-5">
-                      <li>Receive personalized program guidance</li>
-                      <li>Ask about payment options</li>
-                      <li>Confirm course availability</li>
-                    </ul>
-                  </div>
+
+                <div className="rounded-3xl bg-slate-950/5 p-5">
+                  <p className="text-sm font-semibold text-foreground">What we need</p>
+                  <ul className="mt-3 space-y-2 text-sm leading-7 text-muted-foreground list-disc pl-5">
+                    <li>Your name and email</li>
+                    <li>Preferred course or area of interest</li>
+                    <li>A brief message about your goals</li>
+                  </ul>
+                </div>
+
+                <div className="rounded-3xl bg-slate-950/5 p-5">
+                  <p className="text-sm font-semibold text-foreground">Why contact us?</p>
+                  <ul className="mt-3 space-y-2 text-sm leading-7 text-muted-foreground list-disc pl-5">
+                    <li>Receive personalized program guidance</li>
+                    <li>Ask about payment options</li>
+                    <li>Confirm course availability</li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -76,36 +94,30 @@ export default function Contact() {
         </section>
 
         <section className="rounded-[2rem] border border-border/50 bg-background p-8 shadow-lg shadow-slate-900/5">
+          <form
+            action="https://api.web3forms.com/submit"
+            method="POST"
+            className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start"
+          >
+            <input
+              type="hidden"
+              name="access_key"
+              value="e29308a8-b32f-4325-bf07-859b02bed7ff"
+            />
 
-  <form
-    action="https://api.web3forms.com/submit"
-    method="POST"
-    className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start"
-  >
+            <input
+              type="checkbox"
+              name="botcheck"
+              style={{ display: "none" }}
+            />
 
-    <input
-  type="hidden"
-  name="access_key"
-  value="e29308a8-b32f-4325-bf07-859b02bed7ff"
-/>
-
-    <input
-      type="checkbox"
-      name="botcheck"
-      style={{ display: "none" }}
-    />
-
-    <div className="space-y-6">
-
-      <div>
-        <h2 className="text-2xl font-semibold">
-          Send us a Message
-        </h2>
-
-        <p className="mt-3 text-sm text-muted-foreground">
-          Complete the form and we’ll respond as soon as possible.
-        </p>
-      </div>
+            <div className="space-y-6">
+              <div>
+                <h2 className="text-2xl font-semibold">Send us a Message</h2>
+                <p className="mt-3 text-sm text-muted-foreground">
+                  Complete the form and we’ll respond as soon as possible.
+                </p>
+              </div>
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block text-sm font-medium text-foreground">
@@ -119,6 +131,7 @@ export default function Contact() {
                     placeholder="Your name"
                   />
                 </label>
+
                 <label className="block text-sm font-medium text-foreground">
                   Email Address *
                   <input
@@ -144,6 +157,7 @@ export default function Contact() {
                     placeholder="+2778 673 3552"
                   />
                 </label>
+
                 <label className="block text-sm font-medium text-foreground">
                   Subject *
                   <input
@@ -172,33 +186,46 @@ export default function Contact() {
               </label>
 
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-  <p className="text-xs text-muted-foreground">
-    {remainingChars} characters remaining
-  </p>
+                <p className="text-xs text-muted-foreground">
+                  {remainingChars} characters remaining
+                </p>
 
-  <button
-    type="submit"
-    className="inline-flex items-center justify-center rounded-full bg-primary px-8 py-3 text-sm font-semibold text-white transition hover:bg-primary/90"
-  >
-    Send Message
-  </button>
-</div>
-</div>
+                <button
+                  type="submit"
+                  className="inline-flex items-center justify-center rounded-full bg-primary px-8 py-3 text-sm font-semibold text-white transition hover:bg-primary/90"
+                >
+                  Send Message
+                </button>
+              </div>
+            </div>
+
             <aside className="rounded-[2rem] border border-border/40 bg-slate-950/5 p-6 shadow-sm">
               <div className="space-y-5">
                 <div>
-                  <p className="text-sm font-semibold uppercase tracking-[0.35em] text-primary">Need help fast?</p>
+                  <p className="text-sm font-semibold uppercase tracking-[0.35em] text-primary">
+                    Need help fast?
+                  </p>
                   <p className="mt-3 text-sm leading-7 text-muted-foreground">
                     Use this form to request a callback, ask about course plans, or check program availability.
                   </p>
                 </div>
+
                 <div className="space-y-3 rounded-3xl bg-background/80 p-5">
-                  <h3 className="text-base font-semibold text-foreground">Quick Contact Details</h3>
-                  <p className="text-sm text-muted-foreground">Phone: +2778 673 3552</p>
-                  <p className="text-sm text-muted-foreground">Email: Support@elevate365.co.za</p>
+                  <h3 className="text-base font-semibold text-foreground">
+                    Quick Contact Details
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    Phone: +2778 673 3552
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Email: info@elevate365.co.za
+                  </p>
                 </div>
+
                 <div className="space-y-3 rounded-3xl bg-background/80 p-5">
-                  <h3 className="text-base font-semibold text-foreground">What happens next?</h3>
+                  <h3 className="text-base font-semibold text-foreground">
+                    What happens next?
+                  </h3>
                   <ul className="space-y-2 pl-5 text-sm leading-7 text-muted-foreground list-disc">
                     <li>We review your request within one business day.</li>
                     <li>A team member will contact you with guidance.</li>
