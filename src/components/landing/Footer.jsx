@@ -193,7 +193,7 @@ export default function Footer() {
                   className="w-4 h-4 shrink-0"
                   style={{ color: "#a78bfa" }}
                 />
-                +27 78 673 3552
+                +27 69 301 0038
               </li>
 
               <li
@@ -207,7 +207,7 @@ export default function Footer() {
                   className="w-4 h-4 shrink-0"
                   style={{ color: "#a78bfa" }}
                 />
-                hello@elevate365.io
+                 info@elevate365.co.za
               </li>
             </ul>
           </div>

@@ -174,8 +174,8 @@ export default function PrivacyPolicy() {
             <p>
               Elevate365<br />
               Website: elevate365.co.za<br />
-              Email: admin@elevate365.co.za<br />
-              Phone: +27 [78 673 3552]
+              Email: info@elevate365.co.za<br />
+              Phone: +27 [69 301 0038]
             </p>
           </div>
         </section>

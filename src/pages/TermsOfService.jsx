@@ -101,8 +101,8 @@ export default function TermsOfService() {
             </ul>
             <p className="text-sm leading-7 text-muted-foreground">Refund requests must be submitted within 14 days of purchase by contacting:</p>
             <ul className="mt-4 space-y-3 pl-6 text-sm leading-7 text-muted-foreground list-disc">
-              <li>Email: admin@elevate365.co.za</li>
-              <li>Phone: +27 [78 673 3552]</li>
+              <li>Email: info@elevate365.co.za</li>
+              <li>Phone: +27 [69 301 0038]</li>
             </ul>
             <p className="text-sm leading-7 text-muted-foreground">
               Nothing in these Terms limits your rights under the Consumer Protection Act, 2008.
@@ -312,8 +312,8 @@ export default function TermsOfService() {
             <div className="space-y-2 text-sm leading-7 text-muted-foreground">
               <p>ELEVATE365</p>
               <p>Website: www.elevate365.co.za</p>
-              <p>Email: admin@elevate365.co.za</p>
-              <p>Phone: +27 [78 673 3552]</p>
+              <p>Email: info@elevate365.co.za</p>
+              <p>Phone: +27 [69 301 0038]</p>
             </div>
             <p className="text-sm leading-7 text-muted-foreground">By using the Service, you confirm that you have read, understood, and agreed to these Terms of Service.</p>
           </div>

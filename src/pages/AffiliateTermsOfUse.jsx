@@ -229,8 +229,8 @@ export default function AffiliateTermsOfUse() {
           <div className="mt-4 space-y-2 text-sm leading-7 text-muted-foreground">
             <p>Elevate365</p>
             <p>Website: www.elevate365.co.za</p>
-            <p>Email: admin@elevate365.co.za</p>
-            <p>Phone: +27 [78 673 3552]</p>
+            <p>Email: info@elevate365.co.za</p>
+            <p>Phone: +27 [69 301 0038]</p>
           </div>
           <p className="mt-4 text-sm leading-7 text-muted-foreground">By participating in the Elevate365 Affiliate Program, you acknowledge that you have read, understood, and agreed to these Affiliate Terms of Use.</p>
         </section>
