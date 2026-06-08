@@ -19,6 +19,10 @@ import StudentDashboard from './pages/StudentDashboard';
 import Courses from './pages/Courses';
 import CourseDetails from './pages/CourseDetails';
 import AdminDashboard from './pages/AdminDashboard';
+import Checkout from './pages/Checkout';
+import PaymentSuccess from './pages/PaymentSuccess';
+import PaymentCancelled from './pages/PaymentCancelled';
+
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -62,6 +66,11 @@ const AuthenticatedApp = () => {
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/terms-of-service" element={<TermsOfService />} />
       <Route path="/affiliate-terms-of-use" element={<AffiliateTermsOfUse />} />
+
+      <Route path="/checkout" element={<Checkout />} />
+      <Route path="/payment-success" element={<PaymentSuccess />} />
+      <Route path="/payment-cancelled" element={<PaymentCancelled />} />
+      
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
