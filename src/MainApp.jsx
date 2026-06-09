@@ -22,6 +22,8 @@ import AdminDashboard from './pages/AdminDashboard';
 import Checkout from './pages/Checkout';
 import PaymentSuccess from './pages/PaymentSuccess';
 import PaymentCancelled from './pages/PaymentCancelled';
+import MyCourses from "./pages/MyCourses";
+import CourseAccess from "./pages/CourseAccess";
 
 // Add page imports here
 
@@ -70,6 +72,9 @@ const AuthenticatedApp = () => {
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/payment-success" element={<PaymentSuccess />} />
       <Route path="/payment-cancelled" element={<PaymentCancelled />} />
+      
+      <Route path="/my-courses" element={<MyCourses />} />
+      <Route path="/course/:courseId" element={<CourseAccess />} />
       
       <Route path="*" element={<PageNotFound />} />
     </Routes>

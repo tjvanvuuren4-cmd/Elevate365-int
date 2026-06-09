@@ -2,9 +2,12 @@ import { useAuth } from "@/lib/AuthContext";
 import { courses, USD_TO_ZAR } from "@/data/courses";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
+import { useNavigate } from "react-router-dom";
 
 export default function StudentDashboard() {
   const { user, logout } = useAuth();
+
+  const navigate = useNavigate();
 
   const [enrollments, setEnrollments] = useState([]);
 
@@ -221,7 +224,7 @@ export default function StudentDashboard() {
                           }
 
                           if (status === "approved") {
-                            alert("Course access is approved.");
+                            navigate(`/course/${course.id}`);
                           }
                         }}
                         disabled={
