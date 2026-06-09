@@ -31,7 +31,7 @@ export default function LuxuryHero() {
     top: 0,
     bottom: 0,
     width: "64%",
-    backgroundImage: "url('/images/cyber-premium.png')",
+    backgroundImage: "url('/images/cyber-premium.webp')",
     backgroundSize: "cover",
     backgroundPosition: "left center",
     opacity: 0.96,

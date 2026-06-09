@@ -13,7 +13,7 @@ export default function CTASection() {
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(3,3,11,0)_0%,rgba(3,3,11,1)_100%)]" />
 
       <motion.img
-         src="/images/shield-floating.png"
+         src="/images/shield-floating.webp"
          alt="Cyber Shield"
          animate={{
          y: [0, -18, 0],
