@@ -90,7 +90,7 @@ export const courses = [
     id: 8,
     title: "Ethical Hacking & Penetration Testing",
     description: "Learn professional penetration testing methodologies, exploit development, social engineering techniques, and how to conduct comprehensive security audits for organizations.",
-    priceUSD: 1850.00,
+    priceUSD: 2100.00,
     category: "Cybersecurity",
     image: "https://media.base44.com/images/public/6a057b43c92975536478e242/9c5ed6ab7_generated_31b41b51.png",
     duration: "36 weeks",
