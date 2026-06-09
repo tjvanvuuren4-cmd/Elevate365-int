@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { useAuth } from "@/lib/AuthContext";
 import { Navigate } from "react-router-dom";
+import MonthlyApplications from "@/components/admin/MonthlyApplications";
 
 export default function AdminDashboard() {
   const { isAdmin } = useAuth();
@@ -11,6 +12,7 @@ export default function AdminDashboard() {
   const [courses, setCourses] = useState(0);
   const [orders, setOrders] = useState([]);
   const [enrollments, setEnrollments] = useState([]);
+  const [activeTab, setActiveTab] = useState("dashboard");
 
   const fetchAdminData = async () => {
     const { data: eftData, error: eftError } = await supabase
@@ -96,7 +98,28 @@ export default function AdminDashboard() {
         <p className="text-gray-400 mt-4">
           Manage EFT requests, students, and course access.
         </p>
+        <div className="flex gap-3 mt-8">
+  <button
+    onClick={() => setActiveTab("dashboard")}
+    className="rounded-full bg-purple-500/20 px-5 py-2 text-sm font-bold text-purple-300"
+  >
+    Dashboard
+  </button>
 
+  <button
+    onClick={() => setActiveTab("monthly")}
+    className="rounded-full bg-amber-500/20 px-5 py-2 text-sm font-bold text-amber-300"
+  >
+    Monthly Applications
+  </button>
+</div>
+
+{activeTab === "monthly" ? (
+  <div className="mt-12">
+    <MonthlyApplications />
+  </div>
+) : (
+  <>
         <div className="grid md:grid-cols-3 gap-6 mt-12">
           <div className="rounded-3xl border border-purple-500/20 bg-black/60 p-8">
             <p className="text-gray-500">Pending EFT Requests</p>
@@ -249,10 +272,6 @@ export default function AdminDashboard() {
                       Awaiting Docs
                     </button>
 
-                    <button onClick={() => setActiveTab("monthly")}>
-                      Monthly Applications
-                    </button>
-
                     <button
                       onClick={() =>
                         updateEnrollmentStatus(enrollment.id, "removed")
@@ -293,6 +312,8 @@ export default function AdminDashboard() {
             )}
           </div>
         </div>
+        </>
+       )}
       </div>
     </div>
   );
