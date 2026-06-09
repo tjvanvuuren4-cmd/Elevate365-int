@@ -249,6 +249,10 @@ export default function AdminDashboard() {
                       Awaiting Docs
                     </button>
 
+                    <button onClick={() => setActiveTab("monthly")}>
+                      Monthly Applications
+                    </button>
+
                     <button
                       onClick={() =>
                         updateEnrollmentStatus(enrollment.id, "removed")

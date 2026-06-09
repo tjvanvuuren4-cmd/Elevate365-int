@@ -28,6 +28,43 @@ export default function Cart() {
     setCustomer({ name: "", email: "" });
   };
 
+  const handlePayNow = () => {
+  if (!itemCount || !customer.name || !customer.email) return;
+
+  navigate("/checkout", {
+    state: {
+      customer,
+      cartItems,
+      totalAmount: Number((totalPriceUSD * USD_TO_ZAR).toFixed(0)),
+    },
+  });
+};
+const handleMonthlyRequest = async () => {
+  if (!itemCount || !customer.name || !customer.email) return;
+
+  const totalAmount = Number((totalPriceUSD * USD_TO_ZAR).toFixed(0));
+
+  const { error } = await supabase.from("monthly_payment_requests").insert([
+    {
+      user_id: user?.id || null,
+      customer_name: customer.name,
+      customer_email: customer.email,
+      courses: cartItems,
+      total_amount: totalAmount,
+      status: "pending",
+    },
+  ]);
+
+  if (error) {
+    console.error("Monthly request error:", error);
+    alert("Could not submit monthly payment request.");
+    return;
+  }
+
+  alert("Your monthly payment request has been submitted for approval.");
+  clearCart();
+  setCustomer({ name: "", email: "" });
+};
   return (
     <main className="min-h-screen bg-background text-foreground py-16 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl space-y-10">
@@ -130,12 +167,17 @@ export default function Cart() {
                 <div className="flex items-center justify-between">
                   <span>Selected items</span>
                   <span className="rounded-full bg-purple-500/20 px-3 py-1 text-xs font-bold text-purple-300">
-  {itemCount} Courses
-</span>
+                   {itemCount} Courses
+                  </span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span>Estimated total</span>
-                  <span className="font-semibold text-foreground">R {(totalPriceUSD * USD_TO_ZAR).toFixed(0)}</span>
+                  <span className="font-semibold text-foreground">
+                    R {(totalPriceUSD * USD_TO_ZAR).toLocaleString("en-ZA", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                    })}
+                 </span>
                 </div>
               </div>
               <form onSubmit={handleCheckout} className="mt-8 space-y-4">
@@ -192,47 +234,57 @@ export default function Cart() {
     Manual EFT / Bank Transfer
   </label>
 
-  <label className="mt-3 flex items-center gap-3 text-sm text-muted-foreground">
+  <label className="mt-3 flex items-center gap-3 text-sm text-foreground">
     <input
-      type="radio"
-      name="paymentMethod"
-      disabled
-    />
-    PayFast Online Payment Coming Soon
-  </label>
-</div>
-                <Button
-  type="submit"
-  size="lg"
-  className="
-    w-full
-    rounded-2xl
-    bg-gradient-to-r
-    from-purple-700
-    to-purple-500
-    hover:from-purple-600
-    hover:to-purple-400
-    text-white
-    text-sm
-    font-bold
-    uppercase
-    tracking-[0.25em]
-    px-6
-    py-6
-    shadow-[0_15px_40px_rgba(124,58,237,0.35)]
-    transition-all
-    duration-300
-    hover:scale-[1.02]
-  "
-  disabled={!itemCount || !customer.name || !customer.email}
->
-  {paymentMethod === "eft"
-    ? "Request EFT Invoice"
-    : "Complete Checkout"}
-</Button>
-<p className="text-center text-xs text-muted-foreground mt-4">
-  Secure enrollment • Lifetime access • Certificate included
-</p>
+    type="radio"
+    name="paymentMethod"
+    checked={paymentMethod === "online"}
+    onChange={() => setPaymentMethod("online")}
+     />
+     Online Card Payment
+    </label>
+
+    <label className="mt-3 flex items-center gap-3 text-sm text-foreground">
+  <input
+    type="radio"
+    name="paymentMethod"
+    checked={paymentMethod === "monthly"}
+    onChange={() => setPaymentMethod("monthly")}
+  />
+  Monthly Payment Plan Approval
+</label>
+
+    </div>
+             {paymentMethod === "eft" ? (
+  <Button
+    type="submit"
+    size="lg"
+    className="w-full rounded-2xl bg-gradient-to-r from-purple-700 to-purple-500 hover:from-purple-600 hover:to-purple-400 text-white text-sm font-bold uppercase tracking-[0.25em] px-6 py-6 shadow-[0_15px_40px_rgba(124,58,237,0.35)] transition-all duration-300 hover:scale-[1.02]"
+    disabled={!itemCount || !customer.name || !customer.email}
+  >
+    Request EFT Invoice
+  </Button>
+) : paymentMethod === "online" ? (
+  <Button
+    type="button"
+    size="lg"
+    onClick={handlePayNow}
+    className="w-full rounded-2xl bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-500 hover:to-green-400 text-white text-sm font-bold uppercase tracking-[0.25em] px-6 py-6 shadow-[0_15px_40px_rgba(16,185,129,0.35)] transition-all duration-300 hover:scale-[1.02]"
+    disabled={!itemCount || !customer.name || !customer.email}
+  >
+    Continue to Secure Payment
+  </Button>
+) : (
+  <Button
+    type="button"
+    size="lg"
+    onClick={handleMonthlyRequest}
+    className="w-full rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 text-black text-sm font-bold uppercase tracking-[0.25em] px-6 py-6"
+    disabled={!itemCount || !customer.name || !customer.email}
+  >
+    Request Monthly Approval
+  </Button>
+)}
               </form>
               {orderComplete && (
                 <div className="mt-6 rounded-3xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900">

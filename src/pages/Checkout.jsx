@@ -1,16 +1,32 @@
+import { useLocation, useNavigate } from "react-router-dom";
+
 export default function Checkout() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const { customer, cartItems, totalAmount } = location.state || {};
+
+  const amountInCents = Number(totalAmount) * 100;
+
   const handlePayment = async () => {
     try {
+      if (!customer || !cartItems?.length || !totalAmount) {
+        alert("Missing checkout information. Please return to cart.");
+        navigate("/cart");
+        return;
+      }
+
       const response = await fetch("/api/create-stitch-payment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          amount: 89900,
-          payerName: "Test Customer",
-          payerEmailAddress: "test@example.com",
+          amount: amountInCents,
+          payerName: customer.name,
+          payerEmailAddress: customer.email,
           payerPhoneNumber: "+27791231234",
+          courses: cartItems,
         }),
       });
 
@@ -48,11 +64,11 @@ export default function Checkout() {
           />
 
           <h1 className="text-4xl md:text-5xl font-bold mb-5 leading-tight">
-            Cybersecurity Fundamentals Course
+            You're One Step Away From Success
           </h1>
 
           <p className="text-slate-300 text-lg mb-6">
-            Secure your place and start building practical cybersecurity knowledge with Elevate365.
+            Review your selected courses and proceed to our secure payment gateway to finalize your enrollment.
           </p>
           <ul className="mt-6 space-y-2 text-slate-300">
           <li>✓ Full course access</li>
@@ -73,15 +89,20 @@ export default function Checkout() {
           <h2 className="text-2xl font-bold mb-2">Order Summary</h2>
 
           <p className="text-slate-600 mb-6">
-            Please review your course payment before continuing to Stitch secure checkout.
+            Review your enrollment details below. When you're ready, continue to our secure payment gateway to complete your registration.
           </p>
 
           <div className="border-y border-slate-200 py-5 mb-6 space-y-4">
             <div className="flex justify-between">
-              <span>Course</span>
-              <span className="font-semibold">Cybersecurity Fundamentals</span>
+              <span>Selected Courses</span>
+              <div className="text-left font-semibold space-y-1">
+               {cartItems?.map((item) => (
+              <div key={item.id} className="flex items-start gap-2">
+               {item.title}
+              </div>
+              ))}
             </div>
-
+              </div>
             <div className="flex justify-between">
               <span>Provider</span>
               <span className="font-semibold">Elevate365</span>
@@ -89,15 +110,30 @@ export default function Checkout() {
 
             <div className="flex justify-between text-xl font-bold">
               <span>Total</span>
-              <span>R899.00</span>
+              <span>
+                R {Number(totalAmount).toLocaleString("en-ZA", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+               })}
+             </span>
             </div>
           </div>
+          <p className="text-slate-600 mb-6">
+          ✓ SSL Secured
+          </p>
+          <p className="text-slate-600 mb-6">
+          ✓ Powered by Stitch Payments
+          </p>
+          <p className="text-slate-600 mb-6">
+          ✓ Instant Enrollment After Payment
+          </p>
+
 
           <button
             onClick={handlePayment}
             className="w-full py-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-lg transition"
           >
-            Pay Securely with Stitch
+            Proceed to Secure Payment
           </button>
 
           <p className="text-xs text-slate-500 text-center mt-5">
