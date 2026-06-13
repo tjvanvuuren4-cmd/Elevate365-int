@@ -77,7 +77,7 @@ export default function Navbar() {
               fontWeight: 500,
             }}
           >
-            Cyber • Blockchain • Academy
+            TECHNOLOGY • DIGITAL • ACADEMY
           </span>
 
           <div className="h-px w-10 bg-gradient-to-l from-transparent to-purple-500" />
