@@ -243,49 +243,51 @@ export default function LuxuryHero() {
               </motion.button>
 
               <motion.button
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                style={{
-                  border: "none",
-                  background: "transparent",
-                  color: "white",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 14,
-                  cursor: "pointer",
-                }}
-              >
-                <span
-                  style={{
-                    width: 50,
-                    height: 50,
-                    borderRadius: 999,
-                    border: "1px solid rgba(192,132,252,0.8)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "#c084fc",
-                  }}
-                >
-                  <BookOpen size={18} />
-                <span style={{ textAlign: "left" }}>
-                <strong
-                 style={{
-                 display: "block",
-                 fontSize: 14,
-                 textTransform: "uppercase",
-                   }}
-                   >
-                  Student Resources
-                  </strong>
+  whileHover={{ y: -2 }}
+  whileTap={{ scale: 0.97 }}
+  style={{
+    border: "none",
+    background: "transparent",
+    color: "white",
+    display: "flex",
+    alignItems: "center",
+    gap: 14,
+    cursor: "pointer",
+  }}
+>
+  <span
+    style={{
+      width: 50,
+      height: 50,
+      borderRadius: 999,
+      border: "1px solid rgba(192,132,252,0.8)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: "#c084fc",
+    }}
+  >
+    <BookOpen size={18} />
+  </span>
 
-                  <small style={{ color: "rgba(255,255,255,0.55)" }}>
-                   Handbook, Policies & Certificates
-                  </small>
-                </span>
-              </motion.button>
+  <span style={{ textAlign: "left" }}>
+    <strong
+      style={{
+        display: "block",
+        fontSize: 14,
+        textTransform: "uppercase",
+      }}
+    >
+      Student Resources
+    </strong>
+
+    <small style={{ color: "rgba(255,255,255,0.55)" }}>
+      Handbook, Policies & Certificates
+    </small>
+  </span>
+</motion.button>
             </div>
-          </motion.div>
+          
 
           {/* RIGHT SPACE FOR IMAGE */}
           <div />
