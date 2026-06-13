@@ -251,7 +251,7 @@ export default function LuxuryHero() {
     color: "white",
     display: "flex",
     alignItems: "center",
-    gap: 14,
+    gap: 16,
     cursor: "pointer",
   }}
 >
@@ -278,7 +278,7 @@ export default function LuxuryHero() {
         textTransform: "uppercase",
       }}
     >
-      Student Resources
+      STUDENT RESOURCES
     </strong>
 
     <small style={{ color: "rgba(255,255,255,0.55)" }}>
@@ -288,7 +288,7 @@ export default function LuxuryHero() {
 </motion.button>
             </div>
           </motion.div>
-          
+
           {/* RIGHT SPACE FOR IMAGE */}
           <div />
         </div>
