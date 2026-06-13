@@ -267,20 +267,20 @@ export default function LuxuryHero() {
                     color: "#c084fc",
                   }}
                 >
-                  <Play size={18} />
-                </span>
+                  <BookOpen size={18} />
                 <span style={{ textAlign: "left" }}>
-                  <strong
-                    style={{
-                      display: "block",
-                      fontSize: 14,
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    Watch Intro
+                <strong
+                 style={{
+                 display: "block",
+                 fontSize: 14,
+                 textTransform: "uppercase",
+                   }}
+                   >
+                  Student Resources
                   </strong>
+
                   <small style={{ color: "rgba(255,255,255,0.55)" }}>
-                    See how it works
+                   Handbook, Policies & Certificates
                   </small>
                 </span>
               </motion.button>
