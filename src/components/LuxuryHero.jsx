@@ -287,8 +287,8 @@ export default function LuxuryHero() {
   </span>
 </motion.button>
             </div>
+          </motion.div>
           
-
           {/* RIGHT SPACE FOR IMAGE */}
           <div />
         </div>
