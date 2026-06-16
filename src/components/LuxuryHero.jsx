@@ -11,6 +11,7 @@ import {
   BadgeCheck,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const features = [
   [GraduationCap, "Expert-Led Training", "Guided by experienced professionals"],
@@ -278,7 +279,9 @@ export default function LuxuryHero() {
         textTransform: "uppercase",
       }}
     >
-      STUDENT RESOURCES
+      <Link to="/resources">
+       Student Resources
+      </Link>
     </strong>
 
     <small style={{ color: "rgba(255,255,255,0.55)" }}>
