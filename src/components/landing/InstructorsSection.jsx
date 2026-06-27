@@ -1,172 +1,72 @@
-import React, { useState } from "react";
-import { Badge } from "@/components/ui/badge";
+import React from "react";
 import {
+  Building2,
+  Briefcase,
+  Stethoscope,
+  ShoppingBag,
+  GraduationCap,
+  Factory,
   CheckCircle2,
-  ChevronDown,
-  ChevronUp,
-  BookOpen,
-  ShieldCheck,
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { instructors } from "@/lib/courseData";
+import { motion } from "framer-motion";
 
-function InstructorCard({ instructor, index }) {
-  const [expanded, setExpanded] = useState(false);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 35 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.12 }}
-      className="group relative overflow-hidden rounded-[2rem]"
-      style={{
-        background: "rgba(255,255,255,0.035)",
-        border: "1px solid rgba(255,255,255,0.1)",
-        backdropFilter: "blur(18px)",
-      }}
-    >
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-violet-400/70 to-transparent" />
-
-      <div className="p-7 sm:p-8">
-        <div className="flex items-start gap-5 mb-6">
-          <div className="relative shrink-0">
-            <div
-              className="w-20 h-20 rounded-2xl overflow-hidden"
-              style={{ border: "1px solid rgba(255,255,255,0.14)" }}
-            >
-              <img
-                src={instructor.image}
-                alt={instructor.name}
-                className="w-full h-full object-cover object-top"
-              />
-            </div>
-
-            <div
-              className="absolute -bottom-2 -right-2 text-[9px] font-semibold px-2 py-1 rounded-full uppercase"
-              style={{
-                background: "linear-gradient(135deg,#7c3aed,#8b5cf6)",
-                color: "white",
-                letterSpacing: "0.1em",
-              }}
-            >
-              {instructor.experience}
-            </div>
-          </div>
-
-          <div className="flex-1 min-w-0">
-            <h3
-              className="text-xl font-bold leading-tight mb-1"
-              style={{ color: "white" }}
-            >
-              {instructor.name}
-            </h3>
-
-            <p
-              className="text-xs font-semibold uppercase mb-3"
-              style={{ letterSpacing: "0.15em", color: "#a78bfa" }}
-            >
-              {instructor.title}
-            </p>
-
-            <div className="flex flex-wrap gap-1.5">
-              {instructor.credentials.map((cred) => (
-                <Badge
-                  key={cred}
-                  variant="outline"
-                  className="text-[10px]"
-                  style={{
-                    border: "1px solid rgba(167,139,250,0.35)",
-                    color: "#c4b5fd",
-                    background: "rgba(124,58,237,0.1)",
-                    borderRadius: "999px",
-                  }}
-                >
-                  {cred}
-                </Badge>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <p
-          className="text-sm leading-relaxed mb-6"
-          style={{ color: "rgba(255,255,255,0.64)" }}
-        >
-          {instructor.bio}
-        </p>
-
-        <ul className="space-y-2.5 mb-6">
-          {instructor.highlights.map((h) => (
-            <li
-              key={h}
-              className="flex items-start gap-2.5 text-sm"
-              style={{ color: "rgba(255,255,255,0.78)" }}
-            >
-              <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5 text-violet-400" />
-              {h}
-            </li>
-          ))}
-        </ul>
-
-        <button
-          onClick={() => setExpanded(!expanded)}
-          className="flex items-center justify-between w-full pt-5 text-left"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
-        >
-          <span
-            className="flex items-center gap-2 text-xs font-semibold uppercase"
-            style={{ letterSpacing: "0.15em", color: "rgba(255,255,255,0.62)" }}
-          >
-            <BookOpen className="w-3.5 h-3.5 text-violet-400" />
-            Courses by this instructor
-          </span>
-
-          {expanded ? (
-            <ChevronUp className="w-4 h-4 text-violet-300" />
-          ) : (
-            <ChevronDown className="w-4 h-4 text-violet-300" />
-          )}
-        </button>
-
-        <AnimatePresence>
-          {expanded && (
-            <motion.ul
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="overflow-hidden"
-            >
-              <div className="pt-4 space-y-2">
-                {instructor.courses.map((c) => (
-                  <li
-                    key={c}
-                    className="text-sm pl-3 cursor-pointer"
-                    style={{
-                      color: "rgba(255,255,255,0.62)",
-                      borderLeft: "1px solid rgba(167,139,250,0.35)",
-                    }}
-                  >
-                    {c}
-                  </li>
-                ))}
-              </div>
-            </motion.ul>
-          )}
-        </AnimatePresence>
-      </div>
-    </motion.div>
-  );
-}
+const industries = [
+  {
+    icon: Briefcase,
+    title: "Professional Services",
+    description:
+      "IT support for accounting firms, consultants, agencies and office-based teams.",
+    points: ["Email & Microsoft 365", "Secure file sharing", "Help desk support"],
+  },
+  {
+    icon: Stethoscope,
+    title: "Healthcare Practices",
+    description:
+      "Technology support for practices that need secure, reliable systems and minimal downtime.",
+    points: ["Device support", "Data protection", "Reliable connectivity"],
+  },
+  {
+    icon: ShoppingBag,
+    title: "Retail & E-Commerce",
+    description:
+      "Support for businesses that rely on point-of-sale systems, online stores and daily operations.",
+    points: ["POS support", "Network reliability", "User support"],
+  },
+  {
+    icon: GraduationCap,
+    title: "Education & Training",
+    description:
+      "Cloud, device and support solutions for schools, training providers and learning teams.",
+    points: ["Cloud platforms", "User accounts", "Remote support"],
+  },
+  {
+    icon: Factory,
+    title: "Manufacturing & Operations",
+    description:
+      "IT support for operational environments where uptime, systems and communication matter.",
+    points: ["Network support", "Monitoring", "Business continuity"],
+  },
+  {
+    icon: Building2,
+    title: "Small & Growing Businesses",
+    description:
+      "Flexible IT support for companies that need professional systems without a full internal IT team.",
+    points: ["Managed IT", "Cybersecurity", "Scalable support"],
+  },
+];
 
 export default function InstructorsSection() {
   return (
     <section
-      id="instructors"
+      id="industries"
       className="relative overflow-hidden py-24 sm:py-32"
-      style={{ background: "#03030b" }}
+      style={{
+        background: "linear-gradient(180deg, #24163d 0%, #1b132d 100%)",
+      }}
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(124,58,237,0.22),transparent_45%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(192,132,252,0.18),transparent_45%)]" />
+
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(36,22,61,0)_0%,rgba(27,19,45,0.96)_100%)]" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div
@@ -178,49 +78,54 @@ export default function InstructorsSection() {
         >
           <p
             className="text-xs font-semibold uppercase mb-4"
-            style={{ letterSpacing: "0.25em", color: "#a78bfa" }}
+            style={{ letterSpacing: "0.25em", color: "#c084fc" }}
           >
-            The Experts Behind The Courses
+            Industries We Support
           </p>
 
           <h2
             className="text-4xl sm:text-6xl font-black tracking-tight"
-            style={{ color: "white" }}
+            style={{ color: "#ffffff" }}
           >
-            Meet your instructors.
+            IT solutions for modern businesses.
           </h2>
 
           <p
-            className="mt-6 text-lg max-w-2xl mx-auto leading-relaxed"
-            style={{ color: "rgba(255,255,255,0.68)" }}
+            className="mt-6 text-lg max-w-3xl mx-auto leading-relaxed"
+            style={{ color: "rgba(255,255,255,0.72)" }}
           >
-            Learn from certified professionals with real-world experience in
-            cybersecurity, blockchain, cloud systems, and digital defense.
+            Elevate365 supports businesses across different industries with
+            reliable IT services, cloud solutions and cybersecurity-focused
+            technology support.
           </p>
         </motion.div>
 
         <div
           className="grid grid-cols-2 sm:grid-cols-4 gap-px rounded-[2rem] overflow-hidden mb-16"
           style={{
-            background: "rgba(255,255,255,0.08)",
-            border: "1px solid rgba(255,255,255,0.1)",
+            background: "rgba(192,132,252,0.16)",
+            border: "1px solid rgba(192,132,252,0.18)",
+            boxShadow: "0 30px 90px rgba(0,0,0,0.18)",
           }}
         >
           {[
-            { value: "48+", label: "Years Combined Exp." },
-            { value: "12", label: "Certifications" },
-            { value: "Enterprise", label: "Industry Backgrounds" },
-            { value: "4.8★", label: "Average Rating" },
+            { value: "24/7", label: "Monitoring Options" },
+            { value: "365", label: "Microsoft 365 Support" },
+            { value: "SME", label: "Business Focus" },
+            { value: "Secure", label: "Security First" },
           ].map((stat) => (
             <div
               key={stat.label}
               className="px-6 py-7 text-center"
-              style={{ background: "rgba(255,255,255,0.035)" }}
+              style={{
+                background: "rgba(255,255,255,0.06)",
+                backdropFilter: "blur(12px)",
+              }}
             >
               <div
                 className="text-2xl sm:text-4xl font-black mb-1"
                 style={{
-                  background: "linear-gradient(135deg,#8b5cf6,#c084fc)",
+                  background: "linear-gradient(135deg,#f5d0fe,#c084fc)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                 }}
@@ -229,9 +134,9 @@ export default function InstructorsSection() {
               </div>
 
               <div
-                className="text-[10px] uppercase"
+                className="text-[10px] uppercase font-semibold"
                 style={{
-                  color: "rgba(255,255,255,0.5)",
+                  color: "rgba(255,255,255,0.62)",
                   letterSpacing: "0.15em",
                 }}
               >
@@ -242,13 +147,79 @@ export default function InstructorsSection() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {instructors.map((instructor, idx) => (
-            <InstructorCard
-              key={instructor.name}
-              instructor={instructor}
-              index={idx}
-            />
-          ))}
+          {industries.map((industry, idx) => {
+            const Icon = industry.icon;
+
+            return (
+              <motion.div
+                key={industry.title}
+                initial={{ opacity: 0, y: 35 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                className="group relative overflow-hidden rounded-[2rem] p-7 sm:p-8 transition-all duration-300"
+                style={{
+                  background: "rgba(255,255,255,0.06)",
+                  border: "1px solid rgba(192,132,252,0.18)",
+                  backdropFilter: "blur(18px)",
+                  boxShadow: "0 25px 70px rgba(0,0,0,0.12)",
+                }}
+              >
+                <div className="absolute top-0 left-0 h-px w-full bg-gradient-to-r from-transparent via-purple-300/70 to-transparent" />
+
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{
+                    background:
+                      "linear-gradient(135deg,rgba(192,132,252,0.14),transparent)",
+                  }}
+                />
+
+                <div className="relative">
+                  <div
+                    className="w-16 h-16 rounded-2xl flex items-center justify-center mb-7"
+                    style={{
+                      background: "rgba(255,255,255,0.10)",
+                      border: "1px solid rgba(192,132,252,0.24)",
+                      color: "#c084fc",
+                    }}
+                  >
+                    <Icon className="w-7 h-7" />
+                  </div>
+
+                  <h3
+                    className="text-xl font-bold mb-3"
+                    style={{ color: "#ffffff" }}
+                  >
+                    {industry.title}
+                  </h3>
+
+                  <p
+                    className="text-sm leading-relaxed mb-6"
+                    style={{ color: "rgba(255,255,255,0.70)" }}
+                  >
+                    {industry.description}
+                  </p>
+
+                  <ul className="space-y-2.5">
+                    {industry.points.map((point) => (
+                      <li
+                        key={point}
+                        className="flex items-start gap-2.5 text-sm"
+                        style={{ color: "rgba(255,255,255,0.82)" }}
+                      >
+                        <CheckCircle2
+                          className="w-4 h-4 shrink-0 mt-0.5"
+                          style={{ color: "#c084fc" }}
+                        />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

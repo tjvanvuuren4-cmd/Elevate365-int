@@ -12,18 +12,17 @@ export default function Navbar() {
   const handleLoginClick = () => {
   navigate("/login");
   };
-
-  const handleExploreClick = () => {
-  navigate("/courses");
-  };
+  const handleSupportClick = () => {
+  navigate("/contact");
+};
 
   const links = [
-    { label: "Programs", href: "#courses" },
-    { label: "Cybersecurity", href: "#why" },
-    { label: "Blockchain", href: "#instructors" },
-    { label: "Contact", href: "#footer" },
-    
-  ];
+  { label: "Services", href: "#services" },
+  { label: "Industries", href: "#industries" },
+  { label: "About Us", href: "/about" },
+  { label: "Resources", href: "/resources" },
+  { label: "Contact", href: "/contact" },
+];
 
   return (
   <nav
@@ -77,7 +76,7 @@ export default function Navbar() {
               fontWeight: 500,
             }}
           >
-            TECHNOLOGY • DIGITAL • ACADEMY
+            BUSINESS TECHNOLOGY SOLUTIONS
           </span>
 
           <div className="h-px w-10 bg-gradient-to-l from-transparent to-purple-500" />
@@ -126,7 +125,7 @@ export default function Navbar() {
 
             <Button
               size="sm"
-              onClick={handleExploreClick}
+              onClick={handleSupportClick}
               className="border-0"
               style={{
                 background:
@@ -142,7 +141,7 @@ export default function Navbar() {
                   "0 12px 35px rgba(124,58,237,0.35)",
               }}
             >
-              Explore Courses
+              Request IT Support
             </Button>
           </div>
 
@@ -228,7 +227,7 @@ export default function Navbar() {
                       "0 10px 25px rgba(124,58,237,0.3)",
                   }}
                 >
-                  Explore
+                  Request Support
                 </Button>
               </div>
             </div>

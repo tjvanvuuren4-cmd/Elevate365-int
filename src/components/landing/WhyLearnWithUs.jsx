@@ -1,31 +1,38 @@
 import React from "react";
-import { GraduationCap, ShieldCheck, Award, Network } from "lucide-react";
+import {
+  ShieldCheck,
+  Headset,
+  Cloud,
+  Server,
+  Lock,
+  Activity,
+} from "lucide-react";
 import { motion } from "framer-motion";
 
 const features = [
   {
-    icon: GraduationCap,
-    title: "Industry-Led Training",
+    icon: Server,
+    title: "Managed IT Services",
     description:
-      "Learn cybersecurity and blockchain from experienced professionals with real-world technical knowledge.",
+      "Proactive monitoring, maintenance and support to keep your business technology running smoothly.",
   },
   {
-    icon: ShieldCheck,
-    title: "Cybersecurity Focus",
+    icon: Headset,
+    title: "Fast Help Desk Support",
     description:
-      "Build practical skills in threat defense, ethical hacking, cloud security, and digital protection.",
+      "Reliable remote and onsite assistance when your team needs technical support.",
   },
   {
-    icon: Network,
-    title: "Blockchain Mastery",
+    icon: Lock,
+    title: "Security First",
     description:
-      "Understand blockchain systems, smart contracts, decentralized technology, and future-ready digital infrastructure.",
+      "Cybersecurity solutions designed to protect your users, data, devices and business systems.",
   },
   {
-    icon: Award,
-    title: "Career Certification",
+    icon: Cloud,
+    title: "Cloud & Microsoft 365",
     description:
-      "Earn professional certificates that help strengthen your profile and showcase your technical expertise.",
+      "Secure cloud productivity, email, collaboration and Microsoft 365 support for modern teams.",
   },
 ];
 
@@ -34,10 +41,11 @@ export default function WhyLearnWithUs() {
     <section
       id="why"
       className="relative overflow-hidden py-24 sm:py-32"
-      style={{ background: "#03030b" }}
+      style={{
+        background: "linear-gradient(180deg, #fcfbff 0%, #f6f3ff 100%)",
+      }}
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(124,58,237,0.22),transparent_45%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(3,3,11,0)_0%,rgba(3,3,11,1)_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(124,58,237,0.10),transparent_45%)]" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div
@@ -51,7 +59,7 @@ export default function WhyLearnWithUs() {
             className="text-xs font-semibold uppercase mb-4"
             style={{
               letterSpacing: "0.25em",
-              color: "#a78bfa",
+              color: "#7c3aed",
             }}
           >
             Why Choose Elevate365
@@ -59,17 +67,18 @@ export default function WhyLearnWithUs() {
 
           <h2
             className="text-4xl sm:text-6xl font-black tracking-tight"
-            style={{ color: "white" }}
+            style={{ color: "#111827" }}
           >
-            Learn skills built for the future.
+            IT support built around your business.
           </h2>
 
           <p
             className="mt-6 text-lg max-w-2xl mx-auto leading-relaxed"
-            style={{ color: "rgba(255,255,255,0.68)" }}
+            style={{ color: "#4b5563" }}
           >
-            Advance your career with premium training in cybersecurity,
-            blockchain, cloud protection, and digital defense.
+            We help businesses reduce downtime, improve productivity and stay
+            protected with reliable IT support, cloud services and cybersecurity
+            solutions.
           </p>
         </motion.div>
 
@@ -86,16 +95,17 @@ export default function WhyLearnWithUs() {
                 transition={{ duration: 0.55, delay: idx * 0.12 }}
                 className="group relative overflow-hidden rounded-3xl p-7 transition-all duration-300"
                 style={{
-                  background: "rgba(255,255,255,0.035)",
-                  border: "1px solid rgba(255,255,255,0.1)",
+                  background: "rgba(255,255,255,0.92)",
+                  border: "1px solid rgba(124,58,237,0.10)",
                   backdropFilter: "blur(16px)",
+                  boxShadow: "0 25px 70px rgba(31,41,55,0.08)",
                 }}
               >
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   style={{
                     background:
-                      "linear-gradient(135deg,rgba(124,58,237,0.18),transparent)",
+                      "linear-gradient(135deg,rgba(124,58,237,0.10),transparent)",
                   }}
                 />
 
@@ -103,10 +113,9 @@ export default function WhyLearnWithUs() {
                   <div
                     className="w-14 h-14 rounded-2xl flex items-center justify-center mb-7"
                     style={{
-                      background: "rgba(124,58,237,0.15)",
-                      border: "1px solid rgba(167,139,250,0.35)",
-                      color: "#a78bfa",
-                      boxShadow: "0 0 35px rgba(124,58,237,0.18)",
+                      background: "rgba(124,58,237,0.10)",
+                      border: "1px solid rgba(124,58,237,0.20)",
+                      color: "#7c3aed",
                     }}
                   >
                     <Icon className="w-6 h-6" />
@@ -114,14 +123,14 @@ export default function WhyLearnWithUs() {
 
                   <h3
                     className="text-xl font-bold mb-3"
-                    style={{ color: "white" }}
+                    style={{ color: "#111827" }}
                   >
                     {feature.title}
                   </h3>
 
                   <p
                     className="text-sm leading-relaxed"
-                    style={{ color: "rgba(255,255,255,0.62)" }}
+                    style={{ color: "#4b5563" }}
                   >
                     {feature.description}
                   </p>

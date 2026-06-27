@@ -4,65 +4,65 @@ import { ChevronDown } from "lucide-react";
 
 const faqs = [
   {
-    category: "Enrollment",
+    category: "IT Support",
     items: [
       {
-        q: "How do I enroll in a course?",
-        a: "Simply choose your preferred programme, complete checkout, and gain immediate access to your learning dashboard.",
+        q: "What kind of IT support do you provide?",
+        a: "Elevate365 provides managed IT support, help desk assistance, Microsoft 365 support, cybersecurity guidance, cloud support, device support and proactive technology management.",
       },
       {
-        q: "Do I need prior experience?",
-        a: "Many courses are beginner-friendly, while advanced programmes recommend foundational technical knowledge.",
+        q: "Do you support small businesses?",
+        a: "Yes. Our services are designed for small and growing businesses that need reliable IT support without hiring a full internal IT department.",
       },
       {
-        q: "Can I enroll in multiple courses?",
-        a: "Yes. You can enroll in multiple cybersecurity and blockchain programmes simultaneously and learn at your own pace.",
+        q: "Can you assist remotely?",
+        a: "Yes. Many support requests can be handled remotely, and onsite assistance can be arranged depending on the client’s location and service agreement.",
       },
       {
-        q: "Is there an age requirement?",
-        a: "Students must be at least 18 years old. Learners aged 16–17 may enroll with parental consent.",
+        q: "Do you offer once-off IT help?",
+        a: "Yes. We can assist with once-off support, assessments, setup projects and troubleshooting, although ongoing managed support provides the best long-term value.",
       },
     ],
   },
   {
-    category: "Payments",
+    category: "Managed Services",
     items: [
       {
-        q: "What payment methods are accepted?",
-        a: "We accept Visa, Mastercard, EFT, PayFast, and selected digital payment methods.",
+        q: "What is Managed IT Services?",
+        a: "Managed IT Services means Elevate365 helps monitor, maintain and support your business technology on an ongoing basis so your team can focus on running the business.",
       },
       {
-        q: "Are there hidden fees?",
-        a: "No. All pricing is transparent with no hidden charges or recurring costs unless specified.",
+        q: "How are managed IT plans priced?",
+        a: "Managed IT plans are usually priced per user or per device per month. Final pricing depends on the number of users, devices, systems, security needs and support level required.",
       },
       {
-        q: "Can I request a refund?",
-        a: "Yes. We offer a 14-day money-back guarantee for all eligible course purchases.",
+        q: "Can you work with our existing IT team?",
+        a: "Yes. Our co-managed IT option is designed to support internal IT teams by adding extra capacity, specialist support and proactive monitoring.",
       },
       {
-        q: "Do you offer team pricing?",
-        a: "Yes. Enterprise and team packages are available for organisations and corporate training.",
+        q: "Do you include cybersecurity?",
+        a: "Cybersecurity can be included as part of a managed IT plan, including endpoint protection, security guidance, user awareness, monitoring and best-practice recommendations.",
       },
     ],
   },
   {
-    category: "Course Access",
+    category: "Getting Started",
     items: [
       {
-        q: "How long do I have access?",
-        a: "All enrolled students receive lifetime access to course materials and future updates.",
+        q: "How do we get started?",
+        a: "Start by booking a free IT assessment. We review your current technology setup, understand your business needs and recommend the best support plan.",
       },
       {
-        q: "Can I learn on mobile?",
-        a: "Yes. The platform is fully responsive across desktop, tablet, and mobile devices.",
+        q: "Do you provide payment links?",
+        a: "Yes. Where available, Elevate365 can provide secure payment links for IT services, support plans and once-off projects.",
       },
       {
-        q: "Will I receive certification?",
-        a: "Yes. Professional certificates are issued upon successful course completion.",
+        q: "Can we request a custom package?",
+        a: "Yes. Every business is different, so we can build a custom support plan based on your users, devices, systems and security requirements.",
       },
       {
-        q: "Can I study at my own pace?",
-        a: "Absolutely. All programmes are designed for flexible self-paced learning.",
+        q: "Do you still offer training?",
+        a: "Training may still be available as an additional service, especially for cybersecurity awareness, Microsoft 365 usage and internal team development.",
       },
     ],
   },
@@ -74,7 +74,7 @@ function FAQItem({ q, a }) {
   return (
     <div
       style={{
-        borderBottom: "1px solid rgba(255,255,255,0.08)",
+        borderBottom: "1px solid rgba(124,58,237,0.10)",
       }}
     >
       <button
@@ -83,9 +83,9 @@ function FAQItem({ q, a }) {
       >
         <span
           style={{
-            color: "white",
+            color: "#111827",
             fontSize: "15px",
-            fontWeight: 600,
+            fontWeight: 700,
             lineHeight: 1.5,
           }}
         >
@@ -97,9 +97,7 @@ function FAQItem({ q, a }) {
             open ? "rotate-180" : ""
           }`}
           style={{
-            color: open
-              ? "#a78bfa"
-              : "rgba(255,255,255,0.5)",
+            color: open ? "#7c3aed" : "#6b7280",
           }}
         />
       </button>
@@ -116,7 +114,7 @@ function FAQItem({ q, a }) {
             <p
               className="pb-5"
               style={{
-                color: "rgba(255,255,255,0.62)",
+                color: "#4b5563",
                 fontSize: "14px",
                 lineHeight: 1.8,
               }}
@@ -135,13 +133,13 @@ export default function FAQSection() {
     <section
       id="faq"
       className="relative overflow-hidden py-24 sm:py-32"
-      style={{ background: "#03030b" }}
+      style={{
+        background: "linear-gradient(180deg, #fcfbff 0%, #f6f3ff 100%)",
+      }}
     >
-      {/* BACKGROUND GLOW */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(124,58,237,0.22),transparent_45%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(124,58,237,0.10),transparent_45%)]" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-        {/* HEADER */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -153,7 +151,7 @@ export default function FAQSection() {
             className="text-xs font-semibold uppercase mb-4"
             style={{
               letterSpacing: "0.25em",
-              color: "#a78bfa",
+              color: "#7c3aed",
             }}
           >
             Got Questions?
@@ -161,21 +159,20 @@ export default function FAQSection() {
 
           <h2
             className="text-4xl sm:text-6xl font-black tracking-tight"
-            style={{ color: "white" }}
+            style={{ color: "#111827" }}
           >
             Frequently asked questions.
           </h2>
 
           <p
-            className="mt-6 text-lg max-w-2xl mx-auto"
-            style={{ color: "rgba(255,255,255,0.68)" }}
+            className="mt-6 text-lg max-w-2xl mx-auto leading-relaxed"
+            style={{ color: "#4b5563" }}
           >
-            Everything you need to know about enrollment,
-            payments, certification, and learning with Elevate365.
+            Everything you need to know about managed IT support,
+            cybersecurity, payment links and working with Elevate365.
           </p>
         </motion.div>
 
-        {/* FAQ GRID */}
         <div className="grid md:grid-cols-3 gap-8 lg:gap-10">
           {faqs.map((group, gi) => (
             <motion.div
@@ -189,13 +186,13 @@ export default function FAQSection() {
               }}
               className="rounded-[2rem] overflow-hidden"
               style={{
-                background: "rgba(255,255,255,0.035)",
-                border: "1px solid rgba(255,255,255,0.1)",
+                background: "rgba(255,255,255,0.92)",
+                border: "1px solid rgba(124,58,237,0.10)",
                 backdropFilter: "blur(18px)",
+                boxShadow: "0 25px 70px rgba(31,41,55,0.08)",
               }}
             >
               <div className="p-7 sm:p-8">
-                {/* CATEGORY */}
                 <div className="flex items-center gap-3 mb-7">
                   <div
                     style={{
@@ -203,31 +200,26 @@ export default function FAQSection() {
                       height: "22px",
                       borderRadius: "999px",
                       background:
-                        "linear-gradient(180deg,#7c3aed,#a78bfa)",
+                        "linear-gradient(180deg,#7c3aed,#a855f7)",
                     }}
                   />
 
                   <h3
                     className="uppercase"
                     style={{
-                      color: "#c4b5fd",
+                      color: "#7c3aed",
                       fontSize: "12px",
                       letterSpacing: "0.15em",
-                      fontWeight: 700,
+                      fontWeight: 800,
                     }}
                   >
                     {group.category}
                   </h3>
                 </div>
 
-                {/* FAQ ITEMS */}
                 <div>
                   {group.items.map((item) => (
-                    <FAQItem
-                      key={item.q}
-                      q={item.q}
-                      a={item.a}
-                    />
+                    <FAQItem key={item.q} q={item.q} a={item.a} />
                   ))}
                 </div>
               </div>
