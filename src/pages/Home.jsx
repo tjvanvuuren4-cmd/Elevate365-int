@@ -4,6 +4,7 @@ import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
 import WhyLearnWithUs from "@/components/landing/WhyLearnWithUs";
 import CourseCatalog from "@/components/landing/CourseCatalog";
+import ProfessionalITProjects from "@/components/ProfessionalITProjects";
 import InstructorsSection from "@/components/landing/InstructorsSection";
 import FAQSection from "@/components/landing/FAQSection";
 import CTASection from "@/components/landing/CTASection";
@@ -16,6 +17,7 @@ export default function Home() {
       <LuxuryHeroIT />
       <WhyLearnWithUs />
       <CourseCatalog />
+      <ProfessionalITProjects />
       <InstructorsSection />
       <FAQSection />
       <CTASection />
