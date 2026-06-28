@@ -2,17 +2,17 @@ const documents = [
   {
     title: "Terms & Conditions",
     description: "Elevate365 service terms and client agreement.",
-    url: "/documents/policies/Terms-and-Conditions.pdf",
+    url: "/pdfs/Terms-and-Conditions.pdf",
   },
   {
     title: "Privacy Policy",
     description: "How Elevate365 protects client information.",
-    url: "/documents/policies/Privacy-Policy.pdf",
+    url: "/pdfs/Privacy-Policy.pdf",
   },
   {
     title: "Refund Policy",
     description: "Refund and cancellation information.",
-    url: "/documents/policies/Refund-Policy.pdf",
+    url: "/pdfs/Refund-Policy.pdf",
   },
 ];
 
