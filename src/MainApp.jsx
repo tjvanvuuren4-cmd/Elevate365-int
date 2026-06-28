@@ -18,6 +18,7 @@ import Register from './pages/Register';
 import StudentDashboard from './pages/StudentDashboard';
 import Courses from './pages/Courses';
 import Resources from "./components/Resources";
+import Documents from "./pages/Documents";
 import CourseDetails from './pages/CourseDetails';
 import AdminDashboard from './pages/AdminDashboard';
 import Checkout from './pages/Checkout';
@@ -64,6 +65,7 @@ const AuthenticatedApp = () => {
       <Route path="/student-dashboard" element={<StudentDashboard />} />
       <Route path="/courses" element={<Courses />} />
       <Route path="/resources" element={<Resources />} />
+      <Route path="/documents" element={<Documents />} />
       <Route path="/courses/:id" element={<CourseDetails />} />
       <Route path="/admin" element={<AdminDashboard />} />
 

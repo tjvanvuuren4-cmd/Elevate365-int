@@ -21,6 +21,7 @@ export default function Navbar() {
   { label: "Industries", href: "#industries" },
   { label: "About Us", href: "/about" },
   { label: "Resources", href: "/resources" },
+  { label: "Documents", href: "/documents" },
   { label: "Contact", href: "/contact" },
 ];
 
